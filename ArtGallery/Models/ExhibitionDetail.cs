@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ArtGallery.Models
 {
-    public class ExhibitionDatail
+    public class ExhibitionDetail
     {
         [Key]
         public int ExhibitionDetailId { get; set; }
