@@ -16,6 +16,6 @@ namespace ArtGallery.Models
         [ForeignKey("CustomerId")]
         public Customer Customer { get; set; }
         [ForeignKey("ArtworkId")]
-        public ArtWork Artwork { get; set; }   
+        public Artwork Artwork { get; set; }   
     }
 }

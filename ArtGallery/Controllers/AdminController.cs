@@ -4,6 +4,10 @@ namespace ArtGallery.Controllers
 {
     public class AdminController : Controller
     {
+        public IActionResult Index()
+        {
+            return View();
+        }
         public IActionResult Error404()
         {
             return View();
@@ -13,22 +17,6 @@ namespace ArtGallery.Controllers
             return View();
         }
         public IActionResult Authorization()
-        {
-            return View();
-        }
-        public IActionResult Artwork()
-        {
-            return View();
-        }
-        public IActionResult Auction()
-        {
-            return View();
-        }
-        public IActionResult Exhibition()
-        {
-            return View();
-        }
-        public IActionResult Payment()
         {
             return View();
         }

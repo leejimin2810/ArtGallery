@@ -1,9 +1,9 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
     ViewData["title"] = "Artwork";
+    Layout = "_UserLayout";
+
 }
+@model IEnumerable<ArtGallery.Models.ArtworkView>
 
 <!-- Single Page Header start -->
 <div class="container-fluid page-header py-5">
@@ -91,13 +91,13 @@
                             <div class="col-lg-12">
                                 <div class="mb-3">
                                     <h4>Additional</h4>
-@*                                     <div class="mb-2">
-                                        <input type="radio" class="me-2" id="Categories-1" name="Categories-1" value="Beverages">
-                                        <label for="Categories-1"> Organic</label>
+                                    @*                                     <div class="mb-2">
+                                    <input type="radio" class="me-2" id="Categories-1" name="Categories-1" value="Beverages">
+                                    <label for="Categories-1"> Organic</label>
                                     </div>
                                     <div class="mb-2">
-                                        <input type="radio" class="me-2" id="Categories-2" name="Categories-1" value="Beverages">
-                                        <label for="Categories-2"> Fresh</label>
+                                    <input type="radio" class="me-2" id="Categories-2" name="Categories-1" value="Beverages">
+                                    <label for="Categories-2"> Fresh</label>
                                     </div> *@
                                     <div class="mb-2">
                                         <input type="radio" class="me-2" id="Categories-3" name="Categories-1" value="Beverages">
@@ -188,22 +188,30 @@
                     </div>
                     <div class="col-lg-9">
                         <div class="row g-4 justify-content-center">
-                            <div class="col-md-6 col-lg-6 col-xl-4">
-                                <div class="rounded position-relative fruite-item">
-                                    <div class="fruite-img">
-                                        <img src="img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                    </div>
-                                    <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
-                                    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                        <h4>Grapes</h4>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                        <div class="d-flex justify-content-between flex-lg-wrap">
-                                            <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                            @if (Model != null && Model.Any())
+                            {
+
+                                @foreach (var artwork in Model)
+                                {
+                                    <div class="col-md-6 col-lg-6 col-xl-4">
+                                        <div class="rounded position-relative fruite-item">
+                                            <div class="fruite-img">
+                                                <img src="@artwork.ImageURL" class="img-fluid w-100 rounded-top" alt="@artwork.Title">
+                                            </div>
+                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">@artwork.Category</div>
+                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                <h4>@artwork.Title</h4>
+                                                <p>@artwork.Description</p>
+                                                <div class="d-flex justify-content-between flex-lg-wrap">
+                                                    <p class="text-dark fs-5 fw-bold mb-0">@artwork.Price</p>
+                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
+                                }
+                            }
+
                             <div class="col-md-6 col-lg-6 col-xl-4">
                                 <div class="rounded position-relative fruite-item">
                                     <div class="fruite-img">

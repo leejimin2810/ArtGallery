@@ -13,6 +13,6 @@ namespace ArtGallery.Models
         [ForeignKey("ExhibitionId")]
         public Exhibition Exhibition { get; set; }
         [ForeignKey("ArtworkId")]
-        public ArtWork ArtWork { get; set; }
+        public Artwork ArtWork { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace ArtGallery.Mappings
     {
         public MappingProfile() {
             CreateMap<Artist, ArtistView>();
-            CreateMap<ArtWork, ArtworkView>();
+            CreateMap<Artwork, ArtworkView>();
             CreateMap<Auction, AuctionView>();
             CreateMap<Customer, CustomerView>();
             CreateMap<Exhibition, ExhibitionView>();

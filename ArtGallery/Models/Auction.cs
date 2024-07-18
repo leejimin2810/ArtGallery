@@ -12,7 +12,7 @@ namespace ArtGallery.Models
         public double CurrentBid { get; set; }
         public int CustomerId { get; set; }
         [ForeignKey("ArtworkId")]
-        public ArtWork ArtWork { get; set; }
+        public Artwork Artwork { get; set; }
         [ForeignKey("CustomerId")]
         public Customer Customer { get; set; }  
     }

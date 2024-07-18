@@ -10,7 +10,7 @@ namespace ArtGallery.Data
 		}
 
 		public DbSet<Artist> Artists { get; set; }
-		public DbSet<ArtWork> Artworks { get; set; }
+		public DbSet<Artwork> Artworks { get; set; }
 		public DbSet<Auction> Auctions { get; set; }
 		public DbSet<Customer> Customers { get; set; }
 		public DbSet<Exhibition> Exhibitions { get; set; }
