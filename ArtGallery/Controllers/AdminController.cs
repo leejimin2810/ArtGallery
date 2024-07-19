@@ -1,11 +1,33 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ArtGallery.Data;
+using ArtGallery.Models;
+using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ArtGallery.Controllers
 {
     public class AdminController : Controller
     {
-        public IActionResult Index()
+        private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
+
+        public AdminController(ApplicationDbContext context, IMapper mapper)
         {
+            _context = context;
+            _mapper = mapper;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var artists = await _context.Artists.ToListAsync();
+            //var customers = await _context.Customers.ToListAsync();
+
+            var artistViews = _mapper.Map<List<ArtistView>>(artists);
+            //var customerViews = _mapper.Map<List<CustomerView>>(customers);
+
+            ViewBag.Artists = artistViews;
+            //ViewBag.Customers = customerViews;
+
             return View();
         }
         public IActionResult Error404()

@@ -8,7 +8,6 @@ namespace ArtGallery.Data
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
 		{
 		}
-
 		public DbSet<Artist> Artists { get; set; }
 		public DbSet<Artwork> Artworks { get; set; }
 		public DbSet<Auction> Auctions { get; set; }
