@@ -1,36 +1,44 @@
-﻿
-@{
+﻿@{
     ViewData["title"] = "Create Artist";
 }
 @model IEnumerable<ArtGallery.Models.ArtistView>
 
-    <h2>
-        Artist List
-    </h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>ArtistId</th>
-            <th>ArtistName</th>
-            <th>Nationality</th>
-            <th>Biography</th>
-            <th>Website</th>
-            <th>Email</th>
-            <th>PhoneNumber</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var artist in Model)
-        {
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Artist List</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Artist" asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> &nbsp; Create New Artist
+            </a>
+        </div>
+    </div>
+    <br /><br />
+    <table class="table">
+        <thead>
             <tr>
-                <td>@artist.ArtistId</td>
-                <td>@artist.ArtistName</td>
-                <td>@artist.Nationality</td>
-                <td>@artist.Biography</td>
-                <td>@artist.Website</td>
-                <td>@artist.Email</td>
-                <td>@artist.PhoneNumber</td>
+                <th>ArtistId</th>
+                <th>ArtistName</th>
+                <th>Nationality</th>
+                <th>Biography</th>
+                <th>Website</th>
+                <th>Email</th>
+                <th>PhoneNumber</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var artist in Model)
+            {
+                <tr>
+                    <td>@artist.ArtistId</td>
+                    <td>@artist.ArtistName</td>
+                    <td>@artist.Nationality</td>
+                    <td>@artist.Biography</td>
+                    <td>@artist.Website</td>
+                    <td>@artist.Email</td>
+                    <td>@artist.PhoneNumber</td>
+                </tr>
+            }
+        </tbody>
+    </table>

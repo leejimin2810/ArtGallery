@@ -1,6 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Admin Dashboard";
-    var artists = ViewBag.Artists as IEnumerable<ArtGallery.Models.ArtistView>;
+    // var artists = ViewBag.Artists as IEnumerable<ArtGallery.Models.ArtistView>;
     // var customers = ViewBag.Customers as IEnumerable<ArtGallery.Models.CustomerView>;
     Layout = "_Layout";
 
@@ -14,38 +14,5 @@
         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
             <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
         </a>
-    </div>
-
-    <div>
-        <h2>
-            Artist List
-        </h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ArtistId</th>
-                    <th>ArtistName</th>
-                    <th>Nationality</th>
-                    <th>Biography</th>
-                    <th>Website</th>
-                    <th>Email</th>
-                    <th>PhoneNumber</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var artist in Model)
-                {
-                    <tr>
-                        <td>@artist.ArtistId</td>
-                        <td>@artist.ArtistName</td>
-                        <td>@artist.Nationality</td>
-                        <td>@artist.Biography</td>
-                        <td>@artist.Website</td>
-                        <td>@artist.Email</td>
-                        <td>@artist.PhoneNumber</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
     </div>
 </div>
