@@ -15,7 +15,9 @@ namespace ArtGallery.Data
 		public DbSet<Exhibition> Exhibitions { get; set; }
 		public DbSet<Review> Reviews { get; set; }
 		public DbSet<Transaction> Transactions { get; set; }
-	}
+        public DbSet<Account> Accounts { get; set; }
+
+    }
 }
 
 
