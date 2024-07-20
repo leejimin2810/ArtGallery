@@ -31,7 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Views\Admin\Register.cshtml" />
+    <None Include="Views\Account\Register.cshtml" />
     <None Include="wwwroot\UI\js\main.js" />
     <None Include="wwwroot\UI\lib\easing\easing.js" />
     <None Include="wwwroot\UI\lib\easing\easing.min.js" />

@@ -1,11 +1,13 @@
 ﻿using ArtGallery.Data;
 using ArtGallery.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ArtGallery.Controllers
 {
+    [Authorize]
     public class ExhibitionController : Controller
     {
         private readonly ApplicationDbContext _context;
