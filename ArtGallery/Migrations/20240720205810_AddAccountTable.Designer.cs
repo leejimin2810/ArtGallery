@@ -4,6 +4,7 @@ using ArtGallery.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArtGallery.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240720205810_AddAccountTable")]
+    partial class AddAccountTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,27 +25,6 @@ namespace ArtGallery.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ArtGallery.Models.Account", b =>
-                {
-                    b.Property<int>("AccountId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AccountId"));
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("AccountId");
-
-                    b.ToTable("Account");
-                });
-
             modelBuilder.Entity("ArtGallery.Models.Artist", b =>
                 {
                     b.Property<int>("ArtistId")
@@ -50,9 +32,6 @@ namespace ArtGallery.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ArtistId"));
-
-                    b.Property<int?>("AccountId")
-                        .HasColumnType("int");
 
                     b.Property<string>("ArtistName")
                         .IsRequired()
@@ -78,8 +57,6 @@ namespace ArtGallery.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ArtistId");
-
-                    b.HasIndex("AccountId");
 
                     b.ToTable("Artists");
                 });
@@ -174,9 +151,6 @@ namespace ArtGallery.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerId"));
 
-                    b.Property<int?>("AccountId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -194,8 +168,6 @@ namespace ArtGallery.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CustomerId");
-
-                    b.HasIndex("AccountId");
 
                     b.ToTable("Customers");
                 });
@@ -306,15 +278,6 @@ namespace ArtGallery.Migrations
                     b.ToTable("Transactions");
                 });
 
-            modelBuilder.Entity("ArtGallery.Models.Artist", b =>
-                {
-                    b.HasOne("ArtGallery.Models.Account", "Account")
-                        .WithMany()
-                        .HasForeignKey("AccountId");
-
-                    b.Navigation("Account");
-                });
-
             modelBuilder.Entity("ArtGallery.Models.Artwork", b =>
                 {
                     b.HasOne("ArtGallery.Models.Artist", "Artist")
@@ -343,15 +306,6 @@ namespace ArtGallery.Migrations
                     b.Navigation("Artwork");
 
                     b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("ArtGallery.Models.Customer", b =>
-                {
-                    b.HasOne("ArtGallery.Models.Account", "Account")
-                        .WithMany()
-                        .HasForeignKey("AccountId");
-
-                    b.Navigation("Account");
                 });
 
             modelBuilder.Entity("ArtGallery.Models.Review", b =>

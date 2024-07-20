@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ArtGallery.Models
 {
@@ -14,5 +16,8 @@ namespace ArtGallery.Models
         public string Website { get; set; }
         public string Email { get; set; }
         public int PhoneNumber { get; set; }
+        public int? AccountId { get; set; }
+        [ForeignKey("AccountId")]
+        public Account Account { get; set; }
     }
 }
