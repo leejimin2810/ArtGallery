@@ -12,7 +12,7 @@ namespace ArtGallery.Models
         public int ArtworkId { get; set; }
         public double Rating { get; set; }
         public string ReviewText { get; set; }
-        public string ReviewDate { get; set; }
+        public DateTime ReviewDate { get; set; }
         [ForeignKey("CustomerId")]
         public Customer Customer { get; set; }
         [ForeignKey("ArtworkId")]
