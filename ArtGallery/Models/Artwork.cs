@@ -20,4 +20,15 @@ namespace ArtGallery.Models
         [ForeignKey("ArtistId")]
         public Artist Artist { get; set; }
     }
+    public enum Category
+    {
+        ForSale,
+        Auction
+    }
+    public enum Status
+    {
+        OnSale,
+        Auction,
+        Sold
+    }
 }
