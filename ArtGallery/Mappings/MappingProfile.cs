@@ -10,9 +10,10 @@ namespace ArtGallery.Mappings
             CreateMap<Artwork, ArtworkView>();
             CreateMap<Auction, AuctionView>();
             CreateMap<Customer, CustomerView>();
-            CreateMap<Exhibition, ExhibitionView>();
             CreateMap<Review, ReviewView>();
             CreateMap<Transaction, TransactionView>();
+            CreateMap<Exhibition, ExhibitionView>().ReverseMap();
+            //CreateMap<ExhibitionView, Exhibition>();
         }
     }
 }
