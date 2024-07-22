@@ -33,9 +33,9 @@
                             <label for="fruits">Default Sorting:</label>
                             <select id="fruits" name="fruitlist" class="border-0 form-select-sm bg-light me-3" form="fruitform">
                                 <option value="volvo">Nothing</option>
-                                <option value="saab">Popularity</option>
-                                <option value="opel">Organic</option>
-                                <option value="audi">Fantastic</option>
+                                <option value="saab">Available</option>
+                                <option value="opel">Auction</option>
+                                <option value="audi">Sold</option>
                             </select>
                         </div>
                     </div>
@@ -46,34 +46,16 @@
                             <div class="col-lg-12">
                                 <div class="mb-3">
                                     <h4>Categories</h4>
-                                    <ul class="list-unstyled fruite-categorie">
+                                    <ul class="list-unstyled">
                                         <li>
-                                            <div class="d-flex justify-content-between fruite-name">
-                                                <a href="#"><i class="fas fa-apple-alt me-2"></i>Impressionism</a>
+                                            <div class="d-flex justify-content-between">
+                                                <a href="#"><i class="fas fa-apple-alt me-2"></i>For Sale</a>
                                                 <span>(3)</span>
                                             </div>
                                         </li>
                                         <li>
-                                            <div class="d-flex justify-content-between fruite-name">
-                                                <a href="#"><i class="fas fa-apple-alt me-2"></i>Abstract Style</a>
-                                                <span>(5)</span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="d-flex justify-content-between fruite-name">
-                                                <a href="#"><i class="fas fa-apple-alt me-2"></i>Modernism</a>
-                                                <span>(2)</span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="d-flex justify-content-between fruite-name">
-                                                <a href="#"><i class="fas fa-apple-alt me-2"></i>Fauvism</a>
-                                                <span>(8)</span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="d-flex justify-content-between fruite-name">
-                                                <a href="#"><i class="fas fa-apple-alt me-2"></i>Cubism</a>
+                                            <div class="d-flex justify-content-between">
+                                                <a href="#"><i class="fas fa-apple-alt me-2"></i>Auction</a>
                                                 <span>(5)</span>
                                             </div>
                                         </li>
@@ -83,11 +65,11 @@
                             <div class="col-lg-12">
                                 <div class="mb-3">
                                     <h4 class="mb-2">Price</h4>
-                                    <input type="range" class="form-range w-100" id="rangeInput" name="rangeInput" min="0" max="500" value="0" oninput="amount.value=rangeInput.value">
-                                    <output id="amount" name="amount" min-velue="0" max-value="500" for="rangeInput">0</output>
+                                    <input type="range" class="form-range w-100" id="rangeInput" name="rangeInput" min="0" max="10000000" value="0" oninput="amount.value=rangeInput.value">
+                                    <output id="amount" name="amount" min-velue="0" max-value="10000000" for="rangeInput">0</output>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            @* <div class="col-lg-12">
                                 <div class="mb-3">
                                     <h4>Additional</h4>
                                     <div class="mb-2">
@@ -103,7 +85,7 @@
                                         <label for="Categories-5"> Expired</label>
                                     </div>
                                 </div>
-                            </div>
+                            </div> *@
                         </div>
                     </div>
                     <div class="col-lg-9">
@@ -128,8 +110,8 @@
                                                     {
                                                         <p class="text-dark fs-5 fw-bold mb-0">@artwork.Price.ToString("C")</p>
                                                     }                                                    
-                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                                </div>
+@*                                                     <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+ *@                                                </div>
                                             </div>
                                         </div>
                                     </div>

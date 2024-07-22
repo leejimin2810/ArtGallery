@@ -92,6 +92,7 @@ namespace ArtGallery.Controllers
             {
                 try
                 {
+                    exhibitionView.ExhibitionId = exhibition.ExhibitionId;
                     _mapper.Map(exhibitionView, exhibition);
 
                     _context.Update(exhibition);
@@ -108,7 +109,7 @@ namespace ArtGallery.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index1");
             }
             return View(exhibitionView);
         }

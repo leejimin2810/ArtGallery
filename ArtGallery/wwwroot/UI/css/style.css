@@ -1,4 +1,4 @@
-
+﻿
 /*** Spinner Start ***/
 #spinner {
     opacity: 0;
@@ -27,7 +27,42 @@
 }
 /*** Spinner End ***/
 
+.card {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #dee2e6; /* Optional: Border for card */
+    border-radius: 0.25rem; /* Optional: Rounded corners */
+    overflow: hidden; /* Hide overflow to keep card shape */
+}
 
+.card-img-top {
+    width: 100%;
+    height: 200px; /* Ensure all images are the same height */
+    object-fit: cover; /* Crop and cover the area of the card */
+}
+
+.card-body {
+    flex: 1; /* Make the body fill the remaining space */
+    padding: 1rem;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+}
+
+.card-text {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.btn-primary {
+    width: 100%;
+    text-align: center; /* Center the text within the button */
+}
 /*** Button Start ***/
 .btn {
     font-weight: 600;
@@ -262,7 +297,18 @@
 }
 /*** featurs End ***/
 
+.img-container {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
 
+    .img-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 /*** service Start ***/
 .service .service-item .service-content {
     position: relative;

@@ -4,6 +4,7 @@ using ArtGallery.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArtGallery.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240722123511_EditCartTable")]
+    partial class EditCartTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -168,24 +171,25 @@ namespace ArtGallery.Migrations
                     b.ToTable("Auctions");
                 });
 
-            modelBuilder.Entity("ArtGallery.Models.Cart", b =>
+            modelBuilder.Entity("ArtGallery.Models.CartItem", b =>
                 {
-                    b.Property<int>("CartId")
+                    b.Property<int>("CartItemId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartItemId"));
 
-                    b.Property<int>("AccountId")
+                    b.Property<int>("ArtworkId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ArtworkIds")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
-                    b.HasKey("CartId");
+                    b.HasKey("CartItemId");
 
-                    b.ToTable("Carts");
+                    b.HasIndex("ArtworkId");
+
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("ArtGallery.Models.Customer", b =>
@@ -387,6 +391,17 @@ namespace ArtGallery.Migrations
                     b.Navigation("Artwork");
 
                     b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("ArtGallery.Models.CartItem", b =>
+                {
+                    b.HasOne("ArtGallery.Models.Artwork", "Artwork")
+                        .WithMany()
+                        .HasForeignKey("ArtworkId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Artwork");
                 });
 
             modelBuilder.Entity("ArtGallery.Models.Customer", b =>

@@ -6,12 +6,12 @@ namespace ArtGallery.Mappings
     public class MappingProfile : Profile
     {
         public MappingProfile() {
-            CreateMap<Artist, ArtistView>();
-            CreateMap<Artwork, ArtworkView>();
-            CreateMap<Auction, AuctionView>();
-            CreateMap<Customer, CustomerView>();
-            CreateMap<Review, ReviewView>();
-            CreateMap<Transaction, TransactionView>();
+            CreateMap<Artist, ArtistView>().ReverseMap();
+            CreateMap<Artwork, ArtworkView>().ReverseMap();
+            CreateMap<Auction, AuctionView>().ReverseMap();
+            CreateMap<Customer, CustomerView>().ReverseMap();
+            CreateMap<Review, ReviewView>().ReverseMap();
+            CreateMap<Transaction, TransactionView>().ReverseMap();
             CreateMap<Exhibition, ExhibitionView>().ReverseMap();
             //CreateMap<ExhibitionView, Exhibition>();
         }
