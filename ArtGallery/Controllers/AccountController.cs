@@ -66,6 +66,7 @@ namespace ArtGallery.Controllers
             {
                 var claims = new List<Claim>
                     {
+                        new Claim("AccountId", account.AccountId.ToString()),
                         new Claim(ClaimTypes.Name, account.UserName),
                         new Claim(ClaimTypes.Role, account.Role),
                     };

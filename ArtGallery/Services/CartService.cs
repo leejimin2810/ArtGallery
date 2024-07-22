@@ -10,60 +10,52 @@ namespace ArtGallery.Services
         private readonly ApplicationDbContext _context;
         public CartService(ApplicationDbContext context)
         {
-        _context = context; 
+            _context = context;
         }
-        //public async Task AddToCart(int artworkId int userId)
-        //{
-        //    var artwork = await _context.Artworks.FindAsync(artworkId);
+        public async Task AddToCart(int artworkId, int accountId)
+        {
+            var artwork = await _context.Artworks.FindAsync(artworkId);
 
-        //    if (artwork == null || artwork.Category == Models.Category.Auction)
-        //    {
-        //        throw new InvalidOperationException("Artwork cannot be added to cart.");  
-        //    }
+            if (artwork == null || artwork.Category == Models.Category.Auction)
+            {
+                throw new InvalidOperationException("Artwork cannot be added to cart.");
+            }
 
-        //    var cartItem = await _context.Carts.FirstOrDefaultAsync(c => c.ArtworkId == artworkId);
-        //    if (cartItem == null)
-        //    {
-        //        cartItem = new Cart
-        //        {
-        //        ArtworkId = artworkId,
-        //        };
-        //        _context.CartItems.Add(cartItem);
-        //    }
-        //    else
-        //    {
-        //        cartItem.Quantity += quantity;
-        //        _context.CartItems.Update(cartItem);
-        //    }
-        //    await _context.SaveChangesAsync();
-        //}
-        //public async Task RemoveFromCart(int cartItemId)
-        //{
-        //    var cartItem = await _context.CartItems.FindAsync(cartItemId);
-        //    if (cartItem != null)
-        //    {
-        //        _context.CartItems.Remove(cartItem);
-        //        await _context.SaveChangesAsync();
-        //    }
-        //}
+            var cart = await _context.Carts.FirstOrDefaultAsync(c => c.AccountId == accountId);
 
-        //public async Task<List<Cart>> GetCartItems()
-        //{
-        //    var query = from cartItem in _context.CartItems
-        //                join artwork in _context.Artworks on cartItem.ArtworkId equals artwork.ArtworkId
-        //                select new Cart
-        //                {
-        //                    CartItemId = cartItem.CartItemId,
-        //                    ArtworkId = artwork.ArtworkId,
-        //                    Quantity = cartItem.Quantity,
-        //                };
+            if (cart == null)
+            {
+                cart = new Cart
+                {
+                    AccountId = accountId,
+                    ArtworkIds = [artworkId]
+                };
+                _context.Carts.Add(cart);
+            }
+            else
+            {
+                if (!cart.ArtworkIds.Contains(artworkId))
+                {
+                    cart.ArtworkIds.Add(artworkId);
+                }
+                _context.Carts.Update(cart);
+            }
+            await _context.SaveChangesAsync();
+        }
+        public async Task RemoveFromCart(int artworkId, int accountId)
+        {
+            var cart = await _context.Carts.FirstOrDefaultAsync(x => x.AccountId == accountId);
 
-        //    return await query.ToListAsync();
+            if (cart != null)
+            {
+                cart.ArtworkIds.Remove(artworkId);
+                await _context.SaveChangesAsync();
+            }
+        }
 
-        //}
-        ////public async Task<List<CartItem>> GetCartItems()
-        //{
-        //    return await _context.CartItems.Include(c => c.ArtworkId).ToListAsync();
-        //}
+        public async Task<Cart> GetCart(int accountId)
+        {
+            return await _context.Carts.FirstOrDefaultAsync(x => x.AccountId == accountId);
+        }
     }
 }

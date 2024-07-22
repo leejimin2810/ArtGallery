@@ -6,7 +6,7 @@
     Layout = "_UserLayout";
 
 }
-@model IEnumerable<ArtGallery.Models.Cart>
+@model ArtGallery.Models.CartView
 
 <!-- Single Page Header start -->
 <div class="container-fluid page-header py-5">
@@ -19,29 +19,27 @@
 </div>
 <!-- Single Page Header End -->
 <!-- Cart Page Start -->
-@* <div class="container">
+<div class="container">
     <h2>Your Cart</h2>
     <table class="table table-bordered mt-3">
         <thead>
             <tr>
                 <th>Artwork</th>
-                <th>Quantity</th>
+                <th>Description</th>
                 <th>Price</th>
-                <th>Total</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Artworks)
             {
                 <tr>
-                    <td>@item.Artwork.Title</td>
-                    <td>@item.Quantity</td>
-                    <td>@item.Artwork.Price?.ToString("C")</td>
-                    <td>@(item.Quantity * item.Artwork.Price)?.ToString("C")</td>
+                    <td>@item.Title</td>
+                    <td>@item.Description</td>
+                    <td>@item.Price?.ToString("C")</td>
                     <td>
                         <form asp-action="RemoveFromCart" method="post">
-                            <input type="hidden" name="id" value="@item.CartItemId" />
+                            <input type="hidden" name="artworkId" value="@item.ArtworkId" />
                             <button type="submit" class="btn btn-danger">Remove</button>
                         </form>
                     </td>
@@ -49,5 +47,5 @@
             }
         </tbody>
     </table>
-</div> *@
+</div>
 <!-- Cart Page End -->

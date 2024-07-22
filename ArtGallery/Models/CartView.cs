@@ -3,13 +3,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ArtGallery.Models
 {
-    public class Cart
+    public class CartView
     {
         [Key]
         public int CartId { get; set; }
         [Required]
-        public List<int> ArtworkIds { get; set; }
-        [Required]
-        public int AccountId { get; set; }
+        public List<Artwork> Artworks { get; set; }
     }
 }

@@ -78,14 +78,21 @@ namespace ArtGallery.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, ArtworkView artworkView)
         {
-            if (id != artworkView.ArtworkId)
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var artwork = await _context.Artworks.FindAsync(id);
+            if (artwork == null)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                var artwork = _mapper.Map<Artwork>(artworkView);
+                _mapper.Map(artworkView, artwork);
+                artwork.ArtworkId = id;
                 _context.Update(artwork);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index1");
