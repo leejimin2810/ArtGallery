@@ -55,7 +55,7 @@ namespace ArtGallery.Controllers
                 var exhibition = _mapper.Map<Exhibition>(exhibitionView);
                 _context.Add(exhibition);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index1");
             }
             return View(exhibitionView);
         }
@@ -75,9 +75,15 @@ namespace ArtGallery.Controllers
         //POST: Exhibition/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, ExhibitionView exhibitionView)
+        public async Task<IActionResult> Edit(int? id, ExhibitionView exhibitionView)
         {
-            if (id != exhibitionView.ExhibitionId)
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var exhibition = await _context.Exhibitions.FindAsync(id);
+            if (exhibition == null)
             {
                 return NotFound();
             }
@@ -86,11 +92,12 @@ namespace ArtGallery.Controllers
             {
                 try
                 {
-                    var exhibition = _mapper.Map<Exhibition>(exhibitionView);
+                    _mapper.Map(exhibitionView, exhibition);
+
                     _context.Update(exhibition);
                     await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException) 
+                catch (DbUpdateConcurrencyException)
                 {
                     if (!ExhibitionExists(exhibitionView.ExhibitionId))
                     {
@@ -101,10 +108,41 @@ namespace ArtGallery.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             return View(exhibitionView);
         }
+
+        //public async Task<IActionResult> Edit(int id, ExhibitionView exhibitionView)
+        //{
+        //    if (id != exhibitionView.ExhibitionId)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            var exhibition = _mapper.Map<Exhibition>(exhibitionView);
+        //            _context.Update(exhibition);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException) 
+        //        {
+        //            if (!ExhibitionExists(exhibitionView.ExhibitionId))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction("Index1");
+        //    }
+        //    return View(exhibitionView);
+        //}
 
         //GET: Exhibition/Delete
         public async Task<IActionResult> Delete(int id)
@@ -126,7 +164,7 @@ namespace ArtGallery.Controllers
             var exhibition = await _context.Exhibitions.FindAsync(id);
             _context.Exhibitions.Remove(exhibition);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index1");
         }
         private bool ExhibitionExists(int id)
         {
