@@ -34,6 +34,30 @@ namespace ArtGallery.Migrations
                 nullable: false,
                 oldClrType: typeof(DateOnly),
                 oldType: "date");
+
+            migrationBuilder.AlterColumn<int>(
+                name: "Status",
+                table: "Artworks",
+                type: "int",
+                nullable: false,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)");
+
+            migrationBuilder.AlterColumn<double>(
+                name: "Price",
+                table: "Artworks",
+                type: "float",
+                nullable: true,
+                oldClrType: typeof(double),
+                oldType: "float");
+
+            migrationBuilder.AlterColumn<int>(
+                name: "Category",
+                table: "Artworks",
+                type: "int",
+                nullable: false,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)");
         }
 
         /// <inheritdoc />
@@ -62,6 +86,32 @@ namespace ArtGallery.Migrations
                 nullable: false,
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Status",
+                table: "Artworks",
+                type: "nvarchar(max)",
+                nullable: false,
+                oldClrType: typeof(int),
+                oldType: "int");
+
+            migrationBuilder.AlterColumn<double>(
+                name: "Price",
+                table: "Artworks",
+                type: "float",
+                nullable: false,
+                defaultValue: 0.0,
+                oldClrType: typeof(double),
+                oldType: "float",
+                oldNullable: true);
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Category",
+                table: "Artworks",
+                type: "nvarchar(max)",
+                nullable: false,
+                oldClrType: typeof(int),
+                oldType: "int");
         }
     }
 }

@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
+using ArtGallery.Validations;
 namespace ArtGallery.Models
 {
     public class Artwork
@@ -12,9 +13,12 @@ namespace ArtGallery.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public string ImageURL { get; set; }
-        public string Category { get; set; }
-        public double Price { get; set; }
-        public string Status { get; set; }
+        [Required]
+        [CategoryValidation]
+        public Category Category { get; set; }
+        public double? Price { get; set; }
+        [Required]
+        public Status Status { get; set; }
         public DateTime CreateAt { get; set; } = DateTime.Now;
         public DateTime UpdateAt { get; set; } = DateTime.Now;
         [ForeignKey("ArtistId")]
