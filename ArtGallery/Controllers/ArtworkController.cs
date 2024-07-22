@@ -26,7 +26,7 @@ namespace ArtGallery.Controllers
             var artworkViews = _mapper.Map<List<ArtworkView>>(artworks);
             return View(artworkViews);
         }
-        public async Task<IActionResult> Index1()
+        public async Task<IActionResult> Admin()
         {
             var artworks = await _context.Artworks.ToListAsync();
             var artworkViews = _mapper.Map<List<ArtworkView>>(artworks);
@@ -58,7 +58,7 @@ namespace ArtGallery.Controllers
                 var artwork = _mapper.Map<Artwork>(artworkView);
                 _context.Add(artwork);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index1");
+                return RedirectToAction("Admin");
             }
             return View(artworkView);
         }
@@ -95,7 +95,7 @@ namespace ArtGallery.Controllers
                 artwork.ArtworkId = id;
                 _context.Update(artwork);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index1");
+                return RedirectToAction("Admin");
             }
             return View(artworkView);
         }
@@ -118,7 +118,7 @@ namespace ArtGallery.Controllers
             var artwork = await _context.Artworks.FindAsync(id);
             _context.Artworks.Remove(artwork);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index1");
+            return RedirectToAction("Admin");
         }
 
         private bool ArtworkExists(int id)

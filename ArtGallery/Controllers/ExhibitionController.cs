@@ -24,7 +24,7 @@ namespace ArtGallery.Controllers
             var exhibitionViews = _mapper.Map<List<ExhibitionView>>(exhibitions);
             return View(exhibitionViews);
         }
-        public async Task<IActionResult> Index1()
+        public async Task<IActionResult> Admin()
         {
             var exhibitions = await _context.Exhibitions.ToListAsync();
             var exhibitionViews = _mapper.Map<List<ExhibitionView>>(exhibitions);
@@ -55,7 +55,7 @@ namespace ArtGallery.Controllers
                 var exhibition = _mapper.Map<Exhibition>(exhibitionView);
                 _context.Add(exhibition);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index1");
+                return RedirectToAction("Admin");
             }
             return View(exhibitionView);
         }
@@ -109,7 +109,7 @@ namespace ArtGallery.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Index1");
+                return RedirectToAction("Admin");
             }
             return View(exhibitionView);
         }
@@ -140,7 +140,7 @@ namespace ArtGallery.Controllers
         //                throw;
         //            }
         //        }
-        //        return RedirectToAction("Index1");
+        //        return RedirectToAction("Admin");
         //    }
         //    return View(exhibitionView);
         //}
@@ -165,7 +165,7 @@ namespace ArtGallery.Controllers
             var exhibition = await _context.Exhibitions.FindAsync(id);
             _context.Exhibitions.Remove(exhibition);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index1");
+            return RedirectToAction("Admin");
         }
         private bool ExhibitionExists(int id)
         {
