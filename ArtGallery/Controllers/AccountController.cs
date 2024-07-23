@@ -81,7 +81,7 @@ namespace ArtGallery.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpGet, HttpPost]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
