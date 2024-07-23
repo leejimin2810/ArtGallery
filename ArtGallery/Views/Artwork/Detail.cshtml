@@ -32,7 +32,7 @@
     @if (Model.Category == Category.ForSale)
     {
         <dt class="col-sm-2">Price</dt>
-        <dd class="col-sm-10">@Model.Price</dd>
+        <dd class="col-sm-10">@Model.Price?.ToString("C")</dd>
         <dt class="col-sm-2"></dt>
         <dd class="col-sm-10">
             <form asp-controller="Cart" asp-action="AddToCart" method="post">
