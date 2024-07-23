@@ -1,6 +1,16 @@
 ﻿@{
     ViewData["title"] = "Artwork";
     Layout = "_UserLayout";
+    var minPrice = Context.Request.Query["minPrice"].ToString();
+    var maxPrice = Context.Request.Query["maxPrice"].ToString();
+    if (minPrice == "")
+    {
+        minPrice = "0";
+    }
+    if (maxPrice == "")
+    {
+        maxPrice = "0";
+    }
 }
 @model IEnumerable<ArtGallery.Models.ArtworkView>
 
@@ -45,11 +55,11 @@
                                 <div class="mb-3">
                                     <h4 class="mb-2">Price</h4>
                                     <h6 class="mb-2">Min</h6>
-                                    <input type="range" class="form-range w-100" id="minPrice" name="minPrice" min="0" max="10000" value=@Context.Request.Query["minPrice"] oninput="amountMin.value=minPrice.value">
-                                    <output id="amountMin" name="amountMin" min-velue="0" max-value="10000" for="minPrice">@Context.Request.Query["minPrice"]</output>
+                                    <input type="range" class="form-range w-100" id="minPrice" name="minPrice" min="0" max="10000" value=@minPrice oninput="amountMin.value=minPrice.value">
+                                    <output id="amountMin" name="amountMin" min-velue="0" max-value="10000" for="minPrice">@minPrice</output>
                                     <h6 class="mb-2">Max</h6>
-                                    <input type="range" class="form-range w-100" id="maxPrice" name="maxPrice" min="0" max="10000" value=@Context.Request.Query["maxPrice"] oninput="amountMax.value=maxPrice.value">
-                                    <output id="amountMax" name="amountMax" min-velue="0" max-value="10000" for="maxPrice">@Context.Request.Query["maxPrice"]</output>
+                                    <input type="range" class="form-range w-100" id="maxPrice" name="maxPrice" min="0" max="10000" value=@maxPrice oninput="amountMax.value=maxPrice.value">
+                                    <output id="amountMax" name="amountMax" min-velue="0" max-value="10000" for="maxPrice">@maxPrice</output>
                                 </div>
                             </div>
 

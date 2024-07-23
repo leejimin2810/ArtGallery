@@ -40,7 +40,7 @@ namespace ArtGallery.Controllers
                 artworks = artworks.Where(a => a.Price >= minPrice.Value);
             }
 
-            if (maxPrice.HasValue)
+            if (maxPrice.HasValue && maxPrice != 0)
             {
                 artworks = artworks.Where(a => a.Price <= maxPrice.Value);
             }
