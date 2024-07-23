@@ -10,8 +10,8 @@ namespace ArtGallery.Models
         public string ImageURL { get; set; }
         public Category Category { get; set; }
         public Status Status { get; set; }
-        public double Price { get; set; }
-        public DateTime CreateAt { get; set; }
-        public DateTime UpdateAt { get; set; }
+        public double? Price { get; set; }
+        public DateTime? CreateAt { get; set; } = DateTime.Now;
+        public DateTime? UpdateAt { get; set; } = DateTime.Now;
     }
 }

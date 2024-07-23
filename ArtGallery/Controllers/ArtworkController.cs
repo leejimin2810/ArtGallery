@@ -3,6 +3,7 @@ using ArtGallery.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.CodeDom;
 
@@ -56,6 +57,8 @@ namespace ArtGallery.Controllers
             if (ModelState.IsValid)
             {
                 var artwork = _mapper.Map<Artwork>(artworkView);
+                artwork.ArtworkId = artworkView.ArtworkId;
+                artwork.CreateAt = DateTime.Now;
                 _context.Add(artwork);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Admin");
@@ -78,7 +81,7 @@ namespace ArtGallery.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, ArtworkView artworkView)
         {
-            if (id == null)
+            if (id == null || id != artworkView.ArtworkId)
             {
                 return NotFound();
             }
@@ -93,6 +96,7 @@ namespace ArtGallery.Controllers
             {
                 _mapper.Map(artworkView, artwork);
                 artwork.ArtworkId = id;
+                artwork.UpdateAt = DateTime.Now;
                 _context.Update(artwork);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Admin");
@@ -125,39 +129,5 @@ namespace ArtGallery.Controllers
         {
             return _context.Artworks.Any(e => e.ArtworkId == id);
         }
-        //private readonly ApplicationDbContext _context;
-        //private readonly IMapper _mapper;
-        //public ArtworkController(ApplicationDbContext context, IMapper mapper)
-        //{
-        //    _context = context;
-        //    _mapper = mapper;
-        //}
-        //public async Task<IActionResult> Index()
-        //{
-        //    var artworks = await _context.Artworks.ToListAsync();
-        //    var artworkViews = _mapper.Map<List<ArtworkView>>(artworks);
-        //    return View(artworkViews);
-        //}
-        //public async Task<IActionResult> Detail()
-        //{          
-        //    return View();
-        //}
-
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create(Artwork artWork)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        _context.Add(artWork);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction("index");
-        //    }
-        //    return View();
-        //}
     }
 }

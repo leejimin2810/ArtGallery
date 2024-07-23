@@ -1,52 +1,68 @@
-﻿@model Artist
+﻿@model ArtGallery.Models.ArtistCreate
 
-<form method="post">
-	<div class="border p-3 mt-4">
-		<div class="row pb-2">
-			<h2 class="text-primary">Create Artist</h2>
-			<hr />
-		</div>
-		@*<div asp-validation-summary="All"></div>*@
-		<div class="mb-3">
-			<label asp-for="ArtistName"></label>
-			<input asp-for="ArtistName" class="form-control" />
-			<span asp-validation-for="ArtistName" class="text-danger"></span>
-		</div>
-		<div class="mb-3">
-			<label asp-for="Nationality"></label>
-			<input asp-for="Nationality" class="form-control" />
-			<span asp-validation-for="Nationality" class="text-danger"></span>
-		</div>
-		<div class="mb-3">
-			<label asp-for="Biography"></label>
-			<input asp-for="Biography" class="form-control" />
-			<span asp-validation-for="Biography" class="text-danger"></span>
-		</div>
-		<div class="mb-3">
-			<label asp-for="Website"></label>
-			<input asp-for="Website" class="form-control" />
-			<span asp-validation-for="Website" class="text-danger"></span>
-		</div>
-		<div class="mb-3">
-			<label asp-for="Email"></label>
-			<input asp-for="Email" class="form-control" />
-			<span asp-validation-for="Email" class="text-danger"></span>
-		</div>
-		<div class="mb-3">
-			<label asp-for="PhoneNumber"></label>
-			<input asp-for="PhoneNumber" class="form-control" />
-			<span asp-validation-for="PhoneNumber" class="text-danger"></span>
-		</div>
+@{
+    ViewData["Title"] = "Create";
+}
 
-		<button type="submit" class="btn btn-primary" style="width:150px">Create</button>
-		<a asp-controller="Artist" asp-action="Index" class="btn btn-secondary" style="width:150px">
-			Back to List
-		</a>
-	</div>
-</form>
+<h1>Create Artist</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ArtistName" class="control-label"></label>
+                <input asp-for="ArtistName" class="form-control" />
+                <span asp-validation-for="ArtistName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nationality" class="control-label"></label>
+                <input asp-for="Nationality" class="form-control" />
+                <span asp-validation-for="Nationality" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Biography" class="control-label"></label>
+                <input asp-for="Biography" class="form-control" />
+                <span asp-validation-for="Biography" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Website" class="control-label"></label>
+                <input asp-for="Website" class="form-control" />
+                <span asp-validation-for="Website" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label"></label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" type="password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
 
 @section Scripts {
-	@{
-		await Html.RenderPartialAsync("_ValidationScriptsPartial");
-	}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

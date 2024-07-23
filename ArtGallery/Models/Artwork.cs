@@ -19,8 +19,8 @@ namespace ArtGallery.Models
         public double? Price { get; set; }
         [Required]
         public Status Status { get; set; }
-        public DateTime CreateAt { get; set; }
-        public DateTime UpdateAt { get; set; }
+        public DateTime? CreateAt { get; set; } = DateTime.Now;
+        public DateTime? UpdateAt { get; set; } = DateTime.Now;
         [ForeignKey("ArtistId")]
         public Artist Artist { get; set; }
     }

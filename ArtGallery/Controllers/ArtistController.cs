@@ -20,10 +20,30 @@ namespace ArtGallery.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var artists = await _context.Artists.ToListAsync();
+            var artists = await _context.Artists.Include(a => a.Account).ToListAsync();
             var artistViews = _mapper.Map<List<ArtistView>>(artists);
 
             return View(artistViews);
+        }
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var artist = await _context.Artists
+                .Include(a => a.Account)
+                .FirstOrDefaultAsync(m => m.ArtistId == id);
+
+            if (artist == null)
+            {
+                return NotFound();
+            }
+
+            var artistView = _mapper.Map<ArtistView>(artist);
+
+            return View(artistView);
         }
 
         //GET
@@ -35,16 +55,24 @@ namespace ArtGallery.Controllers
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Artist artist)
+        public async Task<IActionResult> Create(ArtistCreate artistCreate)
         {
             if (ModelState.IsValid)
             {
+                var account = _mapper.Map<Account>(artistCreate);
+                account.Role = "Artist";
+                _context.Add(account);
+                await _context.SaveChangesAsync();
+
+                var artist = _mapper.Map<Artist>(artistCreate);
+                artist.AccountId = account.AccountId;
                 _context.Add(artist);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
-                TempData["success"] = "Created successfully";
+
+                return RedirectToAction(nameof(Index));
             }
-            return View(artist);
+
+            return View(artistCreate);
         }
 
         //Get
@@ -54,54 +82,34 @@ namespace ArtGallery.Controllers
             {
                 return NotFound();
             }
-            var artist = await _context.Artists.FindAsync(id);
+
+            var artist = await _context.Artists.Include(a => a.Account).FirstOrDefaultAsync(x => x.ArtistId == id);
+
             if (artist == null)
             {
                 return NotFound();
             }
 
             var artistView = _mapper.Map<ArtistView>(artist);
+
             return View(artistView);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, ArtistView artistView)
+        public async Task<IActionResult> Edit(int id, ArtistEdit artistEdit)
         {
-            if (id != artistView.ArtistId)
-            {
-                return NotFound();
-            }
-
+            var artist = await _context.Artists.FindAsync(id);
             if (ModelState.IsValid)
             {
-                try
-                {
-                    var artist = _mapper.Map<Artist>(artistView);
-                    _context.Update(artist);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ArtistExists(artistView.ArtistId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction("index");
+                _mapper.Map(artistEdit, artist);
+                _context.Update(artist);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
-            return View(artistView);
-        }
-        private bool ArtistExists(int id)
-        {
-            return _context.Artists.Any(e => e.ArtistId == id);
-        }
 
-        //GET
+            return View(artist);
+        }
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -109,26 +117,43 @@ namespace ArtGallery.Controllers
                 return NotFound();
             }
 
-            var artist = await _context.Artists.FirstOrDefaultAsync(m => m.ArtistId == id);
+            var artist = await _context.Artists
+                .Include(a => a.Account)
+                .FirstOrDefaultAsync(m => m.ArtistId == id);
             if (artist == null)
             {
-
-            return NotFound(); 
+                return NotFound();
             }
 
             var artistView = _mapper.Map<ArtistView>(artist);
+
             return View(artistView);
         }
 
-        //POST
+        // POST: Artists/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var artist = await _context.Artists.FindAsync(id);
+            if (artist == null)
+            {
+                return NotFound();
+            }
+
+            var account = await _context.Accounts.FindAsync(artist.AccountId);
+
             _context.Artists.Remove(artist);
+            _context.Accounts.Remove(account);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool ArtistExists(int id)
+        {
+            return _context.Artists.Any(e => e.ArtistId == id);
         }
     }
 }
+

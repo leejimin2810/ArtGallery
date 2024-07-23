@@ -1,15 +1,12 @@
 ﻿namespace ArtGallery.Models
 {
-    public class ArtistView
+    public class ArtistEdit
     {
-        public int ArtistId { get; set; }
-        public string UserName { get; set; }
         public string ArtistName { get; set; }
         public string Nationality { get; set; }
+        public string Email { get; set; }
         public string Biography { get; set; }
         public string Website { get; set; }
-        public string Email { get; set; }
-        public int PhoneNumber { get; set; }
-
+        public string PhoneNumber { get; set; }
     }
 }

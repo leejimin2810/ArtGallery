@@ -1,44 +1,56 @@
-﻿@{
-    ViewData["title"] = "Create Artist";
-}
-@model IEnumerable<ArtGallery.Models.ArtistView>
+﻿@model IEnumerable<ArtGallery.Models.ArtistView>
 
-<div class="container p-3">
-    <div class="row pt-4">
-        <div class="col-6">
-            <h2 class="text-primary">Artist List</h2>
-        </div>
-        <div class="col-6 text-end">
-            <a asp-controller="Artist" asp-action="Create" class="btn btn-primary">
-                <i class="bi bi-plus-circle"></i> &nbsp; Create New Artist
-            </a>
-        </div>
-    </div>
-    <br /><br />
-    <table class="table">
-        <thead>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>List Artist</h2>
+
+<a href="@Url.Action("Create")" class="btn btn-primary mb-4">Create New Artist</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Username
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArtistName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
             <tr>
-                <th>ArtistId</th>
-                <th>ArtistName</th>
-                <th>Nationality</th>
-                <th>Biography</th>
-                <th>Website</th>
-                <th>Email</th>
-                <th>PhoneNumber</th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ArtistName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = item.ArtistId })" class="btn btn-warning mb-2" title="Edit">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="@Url.Action("Delete", new { id = item.ArtistId })" class="btn btn-danger" title="Delete">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var artist in Model)
-            {
-                <tr>
-                    <td>@artist.ArtistId</td>
-                    <td>@artist.ArtistName</td>
-                    <td>@artist.Nationality</td>
-                    <td>@artist.Biography</td>
-                    <td>@artist.Website</td>
-                    <td>@artist.Email</td>
-                    <td>@artist.PhoneNumber</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>

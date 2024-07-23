@@ -6,7 +6,11 @@ namespace ArtGallery.Mappings
     public class MappingProfile : Profile
     {
         public MappingProfile() {
-            CreateMap<Artist, ArtistView>().ReverseMap();
+            CreateMap<Artist, ArtistView>()
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Account.UserName));
+            CreateMap<ArtistEdit, Artist>();
+            CreateMap<ArtistCreate, Artist>();
+            CreateMap<ArtistCreate, Account>();
             CreateMap<Artwork, ArtworkView>().ReverseMap();
             CreateMap<Auction, AuctionView>().ReverseMap();
             CreateMap<Customer, CustomerView>()

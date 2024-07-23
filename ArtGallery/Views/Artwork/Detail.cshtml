@@ -30,12 +30,12 @@
     @if (Model.Category == Category.ForSale)
     {
         <dt class="col-sm-2">Price</dt>
-        <dd class="col-sm-10">@Model.Price.ToString("C")</dd>
+        <dd class="col-sm-10">@Model.Price</dd>
         <dt class="col-sm-2"></dt>
         <dd class="col-sm-10">
             <form asp-controller="Cart" asp-action="AddToCart" method="post">
                 <input type="hidden" name="artworkId" value="@Model.ArtworkId" />
-                <button type="submit" class="btn btn-primary mt-2">Add to Cart</button>
+                <button type="submit" class="btn btn-primary mt-2 w-auto">Add to Cart</button>
             </form>
         </dd>
     }

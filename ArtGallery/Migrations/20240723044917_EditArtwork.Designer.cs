@@ -4,6 +4,7 @@ using ArtGallery.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArtGallery.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240723044917_EditArtwork")]
+    partial class EditArtwork
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,7 +47,7 @@ namespace ArtGallery.Migrations
 
                     b.HasKey("AccountId");
 
-                    b.ToTable("Accounts", (string)null);
+                    b.ToTable("Accounts");
                 });
 
             modelBuilder.Entity("ArtGallery.Models.Artist", b =>
@@ -85,7 +88,7 @@ namespace ArtGallery.Migrations
 
                     b.HasIndex("AccountId");
 
-                    b.ToTable("Artists", (string)null);
+                    b.ToTable("Artists");
                 });
 
             modelBuilder.Entity("ArtGallery.Models.Artwork", b =>
@@ -130,7 +133,7 @@ namespace ArtGallery.Migrations
 
                     b.HasIndex("ArtistId");
 
-                    b.ToTable("Artworks", (string)null);
+                    b.ToTable("Artworks");
                 });
 
             modelBuilder.Entity("ArtGallery.Models.Auction", b =>
@@ -165,7 +168,7 @@ namespace ArtGallery.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Auctions", (string)null);
+                    b.ToTable("Auctions");
                 });
 
             modelBuilder.Entity("ArtGallery.Models.Cart", b =>
@@ -185,7 +188,7 @@ namespace ArtGallery.Migrations
 
                     b.HasKey("CartId");
 
-                    b.ToTable("Carts", (string)null);
+                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("ArtGallery.Models.Customer", b =>
@@ -219,7 +222,7 @@ namespace ArtGallery.Migrations
 
                     b.HasIndex("AccountId");
 
-                    b.ToTable("Customers", (string)null);
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("ArtGallery.Models.Exhibition", b =>
@@ -254,7 +257,7 @@ namespace ArtGallery.Migrations
 
                     b.HasKey("ExhibitionId");
 
-                    b.ToTable("Exhibitions", (string)null);
+                    b.ToTable("Exhibitions");
                 });
 
             modelBuilder.Entity("ArtGallery.Models.ExhibitionDetail", b =>
@@ -277,7 +280,7 @@ namespace ArtGallery.Migrations
 
                     b.HasIndex("ExhibitionId");
 
-                    b.ToTable("ExhibitionDetail", (string)null);
+                    b.ToTable("ExhibitionDetail");
                 });
 
             modelBuilder.Entity("ArtGallery.Models.Review", b =>
@@ -310,7 +313,7 @@ namespace ArtGallery.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Reviews", (string)null);
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("ArtGallery.Models.Transaction", b =>
@@ -347,7 +350,7 @@ namespace ArtGallery.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Transactions", (string)null);
+                    b.ToTable("Transactions");
                 });
 
             modelBuilder.Entity("ArtGallery.Models.Artist", b =>

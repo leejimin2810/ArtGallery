@@ -114,37 +114,6 @@ namespace ArtGallery.Controllers
             return View(exhibitionView);
         }
 
-        //public async Task<IActionResult> Edit(int id, ExhibitionView exhibitionView)
-        //{
-        //    if (id != exhibitionView.ExhibitionId)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            var exhibition = _mapper.Map<Exhibition>(exhibitionView);
-        //            _context.Update(exhibition);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException) 
-        //        {
-        //            if (!ExhibitionExists(exhibitionView.ExhibitionId))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction("Admin");
-        //    }
-        //    return View(exhibitionView);
-        //}
-
         //GET: Exhibition/Delete
         public async Task<IActionResult> Delete(int id)
         {
