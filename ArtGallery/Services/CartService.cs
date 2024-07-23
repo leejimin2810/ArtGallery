@@ -12,11 +12,21 @@ namespace ArtGallery.Services
         {
             _context = context;
         }
+        public async Task<int> GetCartCount(int accountId)
+        {
+            var cart = await _context.Carts.FirstOrDefaultAsync(c => c.AccountId == accountId);
+            if (cart == null || cart.ArtworkIds == null)
+            {
+                return 0;
+            }
+            return cart.ArtworkIds.Count();
+        }
         public async Task AddToCart(int artworkId, int accountId)
         {
             var artwork = await _context.Artworks.FindAsync(artworkId);
 
-            if (artwork == null || artwork.Category == Models.Category.Auction)
+            if (artwork == null || artwork.Category == Models.Category.Auction ||
+                artwork.Status == Status.Auction || artwork.Status == Status.Sold)
             {
                 throw new InvalidOperationException("Artwork cannot be added to cart.");
             }

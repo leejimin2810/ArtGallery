@@ -15,6 +15,7 @@ namespace ArtGallery.Models
         public string ImageURL { get; set; }
         [Required]
         [CategoryValidation]
+        [CategoryForSaleStatusValidation]
         public Category Category { get; set; }
         public double? Price { get; set; }
         [Required]

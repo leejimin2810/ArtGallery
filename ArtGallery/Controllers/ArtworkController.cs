@@ -20,13 +20,61 @@ namespace ArtGallery.Controllers
             _context = context;
             _mapper = mapper;
         }
-
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string keywords, string[] category, string sort, double? priceRange)
         {
-            var artworks = await _context.Artworks.Include(c => c.Artist).ToListAsync();
-            var artworkViews = _mapper.Map<List<ArtworkView>>(artworks);
-            return View(artworkViews);
+            IQueryable<ArtworkView> artworks = _context.Artworks
+                .Select(a => new ArtworkView
+                {
+                    ArtworkId = a.ArtworkId,
+                    Title = a.Title,
+                    Description = a.Description,
+                    ImageURL = a.ImageURL,
+                    Category = a.Category,
+                    Price = a.Price,
+                    Status = a.Status
+                });
+
+            if (!string.IsNullOrEmpty(keywords))
+            {
+                artworks = artworks.Where(a => a.Title.Contains(keywords) || a.Description.Contains(keywords));
+            }
+
+            if (category != null && category.Any())
+            {
+                artworks = artworks.Where(a => category.Contains(a.Category.ToString()));
+            }
+
+            if (priceRange.HasValue)
+            {
+                artworks = artworks.Where(a => a.Price <= priceRange.Value);
+            }
+
+            if (!string.IsNullOrEmpty(sort))
+            {
+                switch (sort)
+                {
+                    case "OnSale":
+                        artworks = artworks.Where(a => a.Status == Status.OnSale);
+                        break;
+                    case "Auction":
+                        artworks = artworks.Where(a => a.Status == Status.Auction);
+                        break;
+                    case "Sold":
+                        artworks = artworks.Where(a => a.Status == Status.Sold);
+                        break;
+                }
+            }
+
+            var artworkList = await artworks.ToListAsync();
+            return View(artworkList);
         }
+
+        //public async Task<IActionResult> Index()
+        //{
+        //    var artworks = await _context.Artworks.Include(c => c.Artist).ToListAsync();
+        //    var artworkViews = _mapper.Map<List<ArtworkView>>(artworks);
+        //    return View(artworkViews);
+        //}
         public async Task<IActionResult> Admin()
         {
             var artworks = await _context.Artworks.Include(c => c.Artist).ToListAsync();

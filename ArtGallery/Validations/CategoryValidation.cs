@@ -17,4 +17,19 @@ namespace ArtGallery.Validations
             return ValidationResult.Success;
         }
     }
+
+    public class CategoryForSaleStatusValidation : ValidationAttribute
+    {
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            var artwork = (Artwork)validationContext.ObjectInstance;
+
+            if (artwork.Category == Category.ForSale && artwork.Status == Status.Auction)
+            {
+                return new ValidationResult("Artwork with category 'ForSale' cannot have status 'Auction'.");
+            }
+
+            return ValidationResult.Success;
+        }
+    }
 }
