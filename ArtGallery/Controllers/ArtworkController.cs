@@ -20,61 +20,46 @@ namespace ArtGallery.Controllers
             _context = context;
             _mapper = mapper;
         }
-        public async Task<IActionResult> Index(string keywords, string[] category, string sort, double? priceRange)
+        public async Task<IActionResult> Index(string title, Category[] categories, double? minPrice, double? maxPrice, Status? status, string artistName)
         {
-            IQueryable<ArtworkView> artworks = _context.Artworks
-                .Select(a => new ArtworkView
-                {
-                    ArtworkId = a.ArtworkId,
-                    Title = a.Title,
-                    Description = a.Description,
-                    ImageURL = a.ImageURL,
-                    Category = a.Category,
-                    Price = a.Price,
-                    Status = a.Status
-                });
+            var artworks = from a in _context.Artworks.Include(a => a.Artist)
+                           select a;
 
-            if (!string.IsNullOrEmpty(keywords))
+            if (!string.IsNullOrEmpty(title))
             {
-                artworks = artworks.Where(a => a.Title.Contains(keywords) || a.Description.Contains(keywords));
+                artworks = artworks.Where(a => a.Title.Contains(title));
             }
 
-            if (category != null && category.Any())
+            if (categories != null && categories.Length > 0)
             {
-                artworks = artworks.Where(a => category.Contains(a.Category.ToString()));
+                artworks = artworks.Where(a => categories.Contains(a.Category));
             }
 
-            if (priceRange.HasValue)
+            if (minPrice.HasValue)
             {
-                artworks = artworks.Where(a => a.Price <= priceRange.Value);
+                artworks = artworks.Where(a => a.Price >= minPrice.Value);
             }
 
-            if (!string.IsNullOrEmpty(sort))
+            if (maxPrice.HasValue)
             {
-                switch (sort)
-                {
-                    case "OnSale":
-                        artworks = artworks.Where(a => a.Status == Status.OnSale);
-                        break;
-                    case "Auction":
-                        artworks = artworks.Where(a => a.Status == Status.Auction);
-                        break;
-                    case "Sold":
-                        artworks = artworks.Where(a => a.Status == Status.Sold);
-                        break;
-                }
+                artworks = artworks.Where(a => a.Price <= maxPrice.Value);
             }
 
-            var artworkList = await artworks.ToListAsync();
-            return View(artworkList);
+            if (status.HasValue)
+            {
+                artworks = artworks.Where(a => a.Status == status.Value);
+            }
+
+            if (!string.IsNullOrEmpty(artistName))
+            {
+                artworks = artworks.Where(a => a.Artist.ArtistName.Contains(artistName));
+            }
+
+            var artworkResults = await artworks.ToListAsync();
+            var artworkViews = _mapper.Map<List<ArtworkView>>(artworkResults);
+            return View(artworkViews);
         }
 
-        //public async Task<IActionResult> Index()
-        //{
-        //    var artworks = await _context.Artworks.Include(c => c.Artist).ToListAsync();
-        //    var artworkViews = _mapper.Map<List<ArtworkView>>(artworks);
-        //    return View(artworkViews);
-        //}
         public async Task<IActionResult> Admin()
         {
             var artworks = await _context.Artworks.Include(c => c.Artist).ToListAsync();
