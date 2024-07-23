@@ -22,6 +22,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.PhoneNumber)
             </th>
+            <th>
+                Action
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -41,11 +44,9 @@
                     @Html.DisplayFor(modelItem => item.PhoneNumber)
                 </td>
                 <td>
-                    <a href="@Url.Action("Edit", new { id = item.ArtistId })" class="btn btn-warning mb-2" title="Edit">
+                    <a href="@Url.Action("Edit", new { id = item.ArtistId })" class="btn btn-warning" title="Edit">
                         <i class="fas fa-edit"></i>
                     </a>
-                </td>
-                <td>
                     <a href="@Url.Action("Delete", new { id = item.ArtistId })" class="btn btn-danger" title="Delete">
                         <i class="fas fa-trash"></i>
                     </a>
