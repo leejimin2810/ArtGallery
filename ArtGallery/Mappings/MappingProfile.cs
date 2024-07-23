@@ -11,7 +11,10 @@ namespace ArtGallery.Mappings
             CreateMap<ArtistEdit, Artist>();
             CreateMap<ArtistCreate, Artist>();
             CreateMap<ArtistCreate, Account>();
-            CreateMap<Artwork, ArtworkView>().ReverseMap();
+            CreateMap<Artwork, ArtworkView>()
+                .ForMember(dest => dest.ArtistName, opt => opt.MapFrom(src => src.Artist.ArtistName));
+            CreateMap<ArtworkEdit, Artwork>().ReverseMap();
+            CreateMap<ArtworkCreate, Artwork>();
             CreateMap<Auction, AuctionView>().ReverseMap();
             CreateMap<Customer, CustomerView>()
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Account.UserName));

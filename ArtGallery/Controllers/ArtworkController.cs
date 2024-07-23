@@ -23,20 +23,20 @@ namespace ArtGallery.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var artworks = await _context.Artworks.ToListAsync();
+            var artworks = await _context.Artworks.Include(c => c.Artist).ToListAsync();
             var artworkViews = _mapper.Map<List<ArtworkView>>(artworks);
             return View(artworkViews);
         }
         public async Task<IActionResult> Admin()
         {
-            var artworks = await _context.Artworks.ToListAsync();
+            var artworks = await _context.Artworks.Include(c => c.Artist).ToListAsync();
             var artworkViews = _mapper.Map<List<ArtworkView>>(artworks);
             return View(artworkViews);
         }
 
         public async Task<IActionResult> Detail(int id)
         {
-            var artwork = await _context.Artworks.FindAsync(id);
+            var artwork = await _context.Artworks.Include(c => c.Artist).FirstOrDefaultAsync(x => x.ArtworkId == id);
             if (artwork == null)
             {
                 return NotFound();
@@ -45,25 +45,27 @@ namespace ArtGallery.Controllers
             return View(artworkView);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewBag.Artist = await _context.Artists.ToListAsync();
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ArtworkView artworkView)
+        public async Task<IActionResult> Create(ArtworkCreate artworkCreate)
         {
             if (ModelState.IsValid)
             {
-                var artwork = _mapper.Map<Artwork>(artworkView);
-                artwork.ArtworkId = artworkView.ArtworkId;
+                var artwork = _mapper.Map<Artwork>(artworkCreate);
                 artwork.CreateAt = DateTime.Now;
                 _context.Add(artwork);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Admin");
             }
-            return View(artworkView);
+
+            ViewBag.Artist = await _context.Artists.ToListAsync();
+            return View(artworkCreate);
         }
 
         public async Task<IActionResult> Edit(int id)
@@ -73,15 +75,17 @@ namespace ArtGallery.Controllers
             {
                 return NotFound();
             }
-            var artworkView = _mapper.Map<ArtworkView>(artwork);
-            return View(artworkView);
+            var artworkEdit = _mapper.Map<ArtworkEdit>(artwork);
+
+            ViewBag.Artist = await _context.Artists.ToListAsync();
+            return View(artworkEdit);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, ArtworkView artworkView)
+        public async Task<IActionResult> Edit(int id, ArtworkEdit artworkEdit)
         {
-            if (id == null || id != artworkView.ArtworkId)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -94,14 +98,13 @@ namespace ArtGallery.Controllers
 
             if (ModelState.IsValid)
             {
-                _mapper.Map(artworkView, artwork);
-                artwork.ArtworkId = id;
+                _mapper.Map(artworkEdit, artwork);
                 artwork.UpdateAt = DateTime.Now;
                 _context.Update(artwork);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Admin");
             }
-            return View(artworkView);
+            return View(artworkEdit);
         }
 
         public async Task<IActionResult> Delete(int id)

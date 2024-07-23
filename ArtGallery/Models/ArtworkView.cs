@@ -11,6 +11,7 @@ namespace ArtGallery.Models
         public Category Category { get; set; }
         public Status Status { get; set; }
         public double? Price { get; set; }
+        public string ArtistName { get; set; }
         public DateTime? CreateAt { get; set; } = DateTime.Now;
         public DateTime? UpdateAt { get; set; } = DateTime.Now;
     }
