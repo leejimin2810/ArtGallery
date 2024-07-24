@@ -72,7 +72,7 @@
                         </div>
                     </form>
                     <div class="col-lg-9">
-                        <div class="row g-4 justify-content-center">
+                        <div class="row g-4 justify-content-center" data-masonry='{"percentPosition": true }'>
                             @if (Model != null && Model.Any())
                             {
                                 @foreach (var artwork in Model)
@@ -116,6 +116,18 @@
                 let newUrl = `${window.location.pathname}?${params.toString()}`;
                 window.history.pushState({}, '', newUrl);
                 window.location.href = newUrl;
+            });
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var elem = document.querySelector('.row');
+            imagesLoaded(elem, function () {
+                var msnry = new Masonry(elem, {
+                    percentPosition: true
+                });
             });
         });
     </script>
