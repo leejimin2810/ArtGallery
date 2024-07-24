@@ -10,16 +10,19 @@ using ArtGallery.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
+using AutoMapper;
 
 namespace ArtGallery.Controllers
 {
     public class AccountController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public AccountController(ApplicationDbContext context)
+        public AccountController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
         public IActionResult Index()
         {
@@ -33,21 +36,36 @@ namespace ArtGallery.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(string username, string password, string role)
+        public async Task<IActionResult> Register(Register register)
         {
-            // Tạo một người dùng mới
-            var account = new Account
+            if (register.Role == "customer")
             {
-                UserName = username,
-                Password = password,
-                Role = role
-            };
+                var account = _mapper.Map<Account>(register);
+                account.Role = "Customer";
+                _context.Add(account);
+                await _context.SaveChangesAsync();
 
-            // Lưu người dùng vào cơ sở dữ liệu
-            _context.Accounts.Add(account);
-            await _context.SaveChangesAsync();
+                var customer = _mapper.Map<Customer>(register);
+                customer.AccountId = account.AccountId;
+                _context.Add(customer);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Login");
+            }
+            else if (register.Role == "artist")
+            {
+                var account = _mapper.Map<Account>(register);
+                account.Role = "Artist";
+                _context.Add(account);
+                await _context.SaveChangesAsync();
 
-            return RedirectToAction("Login");
+                var artist = _mapper.Map<Artist>(register);
+                artist.AccountId = account.AccountId;
+                _context.Add(artist);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Login");
+            }
+
+            return View();
         }
 
         [HttpGet]
