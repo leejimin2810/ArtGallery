@@ -24,7 +24,7 @@ namespace ArtGallery.Validations
         {
             var artwork = (Artwork)validationContext.ObjectInstance;
 
-            if (artwork.Category == Category.ForSale && artwork.Status == Status.Auction)
+            if (artwork.Category == Category.ForSale)
             {
                 return new ValidationResult("Artwork with category 'ForSale' cannot have status 'Auction'.");
             }

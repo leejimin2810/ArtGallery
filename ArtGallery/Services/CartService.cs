@@ -25,8 +25,7 @@ namespace ArtGallery.Services
         {
             var artwork = await _context.Artworks.FindAsync(artworkId);
 
-            if (artwork == null || artwork.Category == Models.Category.Auction ||
-                artwork.Status == Status.Auction || artwork.Status == Status.Sold)
+            if (artwork == null || artwork.Category == Models.Category.Auction || artwork.Status == Status.Sold)
             {
                 throw new InvalidOperationException("Artwork cannot be added to cart.");
             }
@@ -79,5 +78,16 @@ namespace ArtGallery.Services
             }
             return cart;
         }
+        public async Task ClearCart(int accountId)
+        {
+            var cart = await _context.Carts.FirstOrDefaultAsync(c => c.AccountId == accountId);
+
+            if (cart != null)
+            {
+                cart.ArtworkIds.Clear();  // Xóa tất cả các artwork trong giỏ hàng
+                await _context.SaveChangesAsync();
+            }
+        }
+
     }
 }

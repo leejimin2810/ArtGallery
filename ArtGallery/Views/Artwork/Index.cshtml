@@ -78,14 +78,14 @@
                                 @foreach (var artwork in Model)
                                 {
                                     <div class="col-md-6 col-lg-6 col-xl-4">
-                                        <div class="rounded position-relative">
+                                        <div class="rounded border border-secondary rounded-bottom position-relative">
                                             <div>
                                                 <a href="@Url.Action("Detail", "Artwork", new { id = artwork.ArtworkId })">
                                                     <img src="@artwork.ImageURL" class="img-fluid w-100 rounded-top" alt="@artwork.Title">
                                                 </a>
                                             </div>
                                             <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">@artwork.Category</div>
-                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                            <div class="p-4 ">
                                                 <h4>@artwork.Title</h4>
                                                 <p>@artwork.ArtistName</p>
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
