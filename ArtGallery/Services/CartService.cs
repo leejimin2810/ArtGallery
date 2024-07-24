@@ -65,7 +65,19 @@ namespace ArtGallery.Services
 
         public async Task<Cart> GetCart(int accountId)
         {
-            return await _context.Carts.FirstOrDefaultAsync(x => x.AccountId == accountId);
+            var cart = await _context.Carts.FirstOrDefaultAsync(x => x.AccountId == accountId);
+
+            if (cart == null)
+            {
+                cart = new Cart
+                {
+                    AccountId = accountId,
+                    ArtworkIds = []
+                };
+                _context.Carts.Add(cart);
+                await _context.SaveChangesAsync();
+            }
+            return cart;
         }
     }
 }
