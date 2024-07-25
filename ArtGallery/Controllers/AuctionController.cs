@@ -21,6 +21,7 @@ namespace ArtGallery.Controllers
 
         public async Task<IActionResult> Index()
         {
+            ViewData["ActiveNav"] = "Auction";
             var auctions = await _context.Auctions
                 .Include(a => a.Artwork)
                 .Include(a => a.Account)

@@ -20,6 +20,7 @@ namespace ArtGallery.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            ViewData["ActiveNav"] = "Exhibition";
             var exhibitions = await _context.Exhibitions.ToListAsync();
             var exhibitionViews = _mapper.Map<List<ExhibitionView>>(exhibitions);
             return View(exhibitionViews);

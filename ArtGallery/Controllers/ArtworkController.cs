@@ -22,6 +22,8 @@ namespace ArtGallery.Controllers
         }
         public async Task<IActionResult> Index(string title, Category[] categories, double? minPrice, double? maxPrice, Status[] statuses, string artistName)
         {
+            ViewData["ActiveNav"] = "Artwork";
+
             var artworks = from a in _context.Artworks.Include(a => a.Artist)
                            select a;
 

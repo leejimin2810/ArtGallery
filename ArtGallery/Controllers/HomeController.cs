@@ -17,6 +17,7 @@ namespace ArtGallery.Controllers
 
         public IActionResult Index()
         {
+            ViewData["ActiveNav"] = "Home";
             return View();
         }
 

@@ -68,10 +68,10 @@
                 </button>
                 <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                     <div class="navbar-nav mx-auto">
-                        <a asp-controller="Home" asp-action="Index" class="nav-item nav-link active">Home</a>
-                        <a asp-controller="Artwork" asp-action="Index" class="nav-item nav-link">Artworks</a>
-                        <a asp-controller="Auction" asp-action="Index" class="nav-item nav-link">Auction</a>
-                        <a asp-controller="Exhibition" asp-action="Index" class="nav-item nav-link">Exhibition</a>
+                        <a asp-controller="Home" asp-action="Index" class="nav-item nav-link @(ViewData["ActiveNav"]?.ToString() == "Home" ? "active" : "")">Home</a>
+                        <a asp-controller="Artwork" asp-action="Index" class="nav-item nav-link @(ViewData["ActiveNav"]?.ToString() == "Artwork" ? "active" : "")">Artworks</a>
+                        <a asp-controller="Auction" asp-action="Index" class="nav-item nav-link @(ViewData["ActiveNav"]?.ToString() == "Auction" ? "active" : "")">Auction</a>
+                        <a asp-controller="Exhibition" asp-action="Index" class="nav-item nav-link @(ViewData["ActiveNav"]?.ToString() == "Exhibition" ? "active" : "")">Exhibition</a>
                     </div>
                     <div class="d-flex m-3 me-0">
                         <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
