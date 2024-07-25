@@ -1,9 +1,9 @@
-﻿
+﻿@model IEnumerable<ArtGallery.Models.ExhibitionView>
+
 @{
     ViewData["title"] = "Home";
     Layout = "_UserLayout";
 }
-@model IEnumerable<ArtGallery.Models.ArtworkView>
 <!-- Hero Start -->
 <div class="container-fluid py-5 mb-5 hero-header">
     <div class="container py-5">
@@ -20,12 +20,16 @@
                 <div id="carouselId" class="carousel slide position-relative" data-bs-ride="carousel">
                     <div class="carousel-inner" role="listbox">
                         <div class="carousel-item active rounded">
-                            <img src="https://th.bing.com/th/id/OIP.sPNnBOCsjzyJ7epxf6AE9wHaE6?rs=1&pid=ImgDetMain" class="img-fluid w-100 h-100 bg-secondary rounded" alt="First slide">
-                            <a href="#" class="btn px-4 py-2 text-white rounded">London</a>
-                        </div>
-                        <div class="carousel-item rounded">
-                            <img src="https://i2.wp.com/anniewearsit.com/wp-content/uploads/2018/05/1.27.18_3222.jpg?w=2874&h=1917&ssl=1" class="img-fluid w-100 h-100 rounded" alt="Second slide">
-                            <a href="#" class="btn px-4 py-2 text-white rounded">Toronto</a>
+                            @if (Model.Any())
+                            {
+                                foreach (var item in Model)
+                                {
+
+                                    <img src="@item.ImageUrl" class="img-fluid w-100 h-100 bg-secondary rounded" alt="@item.ExhibitionName">
+                                    <a asp-controller="Exhibition" asp-action="Detail" class="btn px-4 py-2 text-white rounded">@item.ExhibitionName</a>
+
+                                }
+                            }
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">

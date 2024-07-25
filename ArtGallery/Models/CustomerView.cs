@@ -1,8 +1,11 @@
-﻿namespace ArtGallery.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ArtGallery.Models
 {
     public class CustomerView
     {
         public int CustomerId { get; set; }
+        [Required]
         public string UserName { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }

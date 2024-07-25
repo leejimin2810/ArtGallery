@@ -1,4 +1,6 @@
-﻿namespace ArtGallery.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ArtGallery.Models
 {
     public class ArtistCreate
     {
@@ -8,7 +10,9 @@
         public string Biography { get; set; }
         public string Website { get; set; }
         public string PhoneNumber { get; set; }
+        [Required]
         public string UserName { get; set; }
+        [Required]
         public string Password { get; set; }
     }
 }

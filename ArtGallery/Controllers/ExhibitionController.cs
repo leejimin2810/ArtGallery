@@ -4,6 +4,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using System.Web;
 
 namespace ArtGallery.Controllers
 {
@@ -25,6 +27,7 @@ namespace ArtGallery.Controllers
             var exhibitionViews = _mapper.Map<List<ExhibitionView>>(exhibitions);
             return View(exhibitionViews);
         }
+
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Admin()
         {
@@ -56,6 +59,7 @@ namespace ArtGallery.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ExhibitionView exhibitionView)
         {
+
             if (ModelState.IsValid)
             {
                 var exhibition = _mapper.Map<Exhibition>(exhibitionView);

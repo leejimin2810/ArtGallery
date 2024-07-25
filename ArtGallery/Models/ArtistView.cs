@@ -1,8 +1,11 @@
-﻿namespace ArtGallery.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ArtGallery.Models
 {
     public class ArtistView
     {
         public int ArtistId { get; set; }
+        [Required]
         public string UserName { get; set; }
         public string ArtistName { get; set; }
         public string Nationality { get; set; }

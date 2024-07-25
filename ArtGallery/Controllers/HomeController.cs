@@ -1,7 +1,10 @@
 using ArtGallery.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Web;
 
 namespace ArtGallery.Controllers
 {
@@ -17,7 +20,6 @@ namespace ArtGallery.Controllers
 
         public IActionResult Index()
         {
-            ViewData["ActiveNav"] = "Home";
             return View();
         }
 

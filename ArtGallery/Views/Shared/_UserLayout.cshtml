@@ -74,7 +74,7 @@
                         <a asp-controller="Exhibition" asp-action="Index" class="nav-item nav-link @(ViewData["ActiveNav"]?.ToString() == "Exhibition" ? "active" : "")">Exhibition</a>
                     </div>
                     <div class="d-flex m-3 me-0">
-                        <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
+                        @* <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button> *@
                         <a asp-controller="Cart" asp-action="Index" class="position-relative me-4 my-auto">
                             <i class="fa fa-shopping-bag fa-2x"></i>
                             <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">@cartItemCount</span>
@@ -95,7 +95,7 @@
     </div>
     <!-- Navbar End -->
     <!-- Modal Search Start -->
-    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    @* <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content rounded-0">
                 <div class="modal-header">
@@ -110,7 +110,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> *@
     
     <div class="container">
         <main role="main" class="pb-3">

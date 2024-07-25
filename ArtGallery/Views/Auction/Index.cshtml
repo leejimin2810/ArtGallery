@@ -39,7 +39,7 @@
                                             <input type="number" name="NewBid" class="form-control" min="@auction.CurrentBid" step="0.01" required />
                                         </div>
                                         <input type="hidden" name="AuctionId" value="@auction.AuctionId" />
-                                        <button type="submit" class="btn btn-primary mt-2">Place Bid</button>
+                                        <button type="submit" class="btn btn-primary w-auto mt-2">Place Bid</button>
                                     </form>
                                 }
                                 @if (auction.EndDate <= DateTime.Now)

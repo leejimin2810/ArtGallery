@@ -4,6 +4,7 @@ using ArtGallery.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace ArtGallery.Controllers
 {
@@ -27,6 +28,7 @@ namespace ArtGallery.Controllers
                 .Include(a => a.Account)
                 .ToListAsync();
 
+            auctions.Reverse();
             var auctionViews = _mapper.Map<List<AuctionView>>(auctions);
 
             return View(auctionViews);
@@ -44,7 +46,7 @@ namespace ArtGallery.Controllers
             return View(auctionViews);
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PlaceBid(AuctionView model)
@@ -83,7 +85,7 @@ namespace ArtGallery.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create()
         {
             ViewBag.Artwork = await _context.Artworks
@@ -92,7 +94,7 @@ namespace ArtGallery.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AuctionCreate auctionCreate)
@@ -110,7 +112,7 @@ namespace ArtGallery.Controllers
             return View(auctionCreate);
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id)
         {
             var auction = await _context.Auctions.FindAsync(id);
@@ -124,7 +126,7 @@ namespace ArtGallery.Controllers
             return View(auctionViewModel);
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, AuctionEdit auctionEdit)
@@ -150,7 +152,7 @@ namespace ArtGallery.Controllers
             return View(auctionEdit);
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var auction = await _context.Auctions
@@ -166,7 +168,7 @@ namespace ArtGallery.Controllers
             return View(auctionView);
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

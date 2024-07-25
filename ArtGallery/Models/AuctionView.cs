@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ArtGallery.Models
 {
@@ -12,6 +13,7 @@ namespace ArtGallery.Models
         public DateTime EndDate { get; set; }
         public double StartingPrice { get; set; }
         public double CurrentBid { get; set; }
+        [Required]
         public string UserName { get; set; }
         public double NewBid { get; set; }
     }

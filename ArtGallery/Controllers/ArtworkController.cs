@@ -63,7 +63,7 @@ namespace ArtGallery.Controllers
             var artworkViews = _mapper.Map<List<ArtworkView>>(artworkResults);
             return View(artworkViews);
         }
-        [Authorize(Roles = "Artist")]
+        [Authorize(Roles = "Artist, Admin")]
         public async Task<IActionResult> Admin()
         {
             var artworks = await _context.Artworks.Include(c => c.Artist).ToListAsync();
@@ -82,7 +82,7 @@ namespace ArtGallery.Controllers
             return View(artworkView);
         }
 
-        [Authorize(Roles = "Artist")]
+        [Authorize(Roles = "Artist, Admin")]
         public async Task<IActionResult> Create()
         {
             ViewBag.Artist = await _context.Artists.ToListAsync();
@@ -91,7 +91,7 @@ namespace ArtGallery.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Artist")]
+        [Authorize(Roles = "Artist, Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ArtworkCreate artworkCreate)
@@ -110,7 +110,7 @@ namespace ArtGallery.Controllers
             return View(artworkCreate);
         }
 
-        [Authorize(Roles = "Artist")]
+        [Authorize(Roles = "Artist, Admin")]
         public async Task<IActionResult> Edit(int id)
         {
             var artwork = await _context.Artworks.FindAsync(id);
@@ -124,7 +124,7 @@ namespace ArtGallery.Controllers
             ViewBag.Artist = await _context.Artists.ToListAsync();
             return View(artworkEdit);
         }
-        [Authorize(Roles = "Artist")]
+        [Authorize(Roles = "Artist, Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, ArtworkEdit artworkEdit)
@@ -151,7 +151,7 @@ namespace ArtGallery.Controllers
             return View(artworkEdit);
         }
 
-        [Authorize(Roles = "Artist")]
+        [Authorize(Roles = "Artist, Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var artwork = await _context.Artworks.FindAsync(id);
@@ -162,7 +162,7 @@ namespace ArtGallery.Controllers
             var artworkView = _mapper.Map<ArtworkView>(artwork);
             return View(artworkView);
         }
-        [Authorize(Roles = "Artist")]
+        [Authorize(Roles = "Artist, Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
