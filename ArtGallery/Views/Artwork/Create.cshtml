@@ -2,6 +2,7 @@
     ViewData["title"] = "Create Artwork";
     Layout = "_Layout";
     var artists = ViewBag.Artist;
+    var exhibitions = ViewBag.Exhibition;
 }
 
 @model ArtGallery.Models.ArtworkCreate
@@ -63,6 +64,17 @@
             }
         </select>
         <span asp-validation-for="ArtistId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ExhibitionId" class="control-label"></label>
+        <select asp-for="ExhibitionId" class="form-control">
+            <option value="">-- Select Exhibition --</option>
+            @foreach (Exhibition exhibition in exhibitions)
+            {
+                <option value="@exhibition.ExhibitionId">@exhibition.ExhibitionName</option>
+            }
+        </select>
+        <span asp-validation-for="ExhibitionId" class="text-danger"></span>
     </div>
     <div class="form-group">
         <input type="submit" value="Create" class="btn btn-primary" />

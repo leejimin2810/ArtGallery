@@ -2,8 +2,10 @@
 using ArtGallery.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace ArtGallery.Controllers
 {
@@ -19,17 +21,17 @@ namespace ArtGallery.Controllers
             _mapper = mapper;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var artists = await _context.Artists.ToListAsync();
-            //var customers = await _context.Customers.ToListAsync();
-
-            var artistViews = _mapper.Map<List<ArtistView>>(artists);
-            //var customerViews = _mapper.Map<List<CustomerView>>(customers);
-
-            ViewBag.Artists = artistViews;
-            //ViewBag.Customers = customerViews;
-
+            var role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            if (role == "Artist")
+            {
+                return RedirectToAction("Admin", "Artwork");
+            }
+            if(role == "Admin")
+            {
+                return RedirectToAction("Admin", "Auction");
+            }
             return View();
         }
         public IActionResult Error404()

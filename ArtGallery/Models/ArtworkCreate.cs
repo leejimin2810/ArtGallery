@@ -8,6 +8,7 @@ namespace ArtGallery.Models
     {
         [Required]
         public int ArtistId { get; set; }
+        public int? ExhibitionId { get; set; }
         [Required]
         public string Title { get; set; }
         public string Description { get; set; }

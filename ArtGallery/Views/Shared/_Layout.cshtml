@@ -1,5 +1,6 @@
 ﻿@using System.Security.Claims;
 @{
+    var role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
     var username = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
 }
 
@@ -70,7 +71,9 @@
                     <span>Exhibition Management</span>
                 </a>
             </li>
-
+          @*   @if(role == "Artist")
+            {
+            } *@
             <li class="nav-item">
                 <a class="nav-link" asp-controller="Artwork" asp-action="Admin">
                     <i class="bi bi-palette"></i>

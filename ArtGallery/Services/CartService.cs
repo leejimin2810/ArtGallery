@@ -25,7 +25,7 @@ namespace ArtGallery.Services
         {
             var artwork = await _context.Artworks.FindAsync(artworkId);
 
-            if (artwork == null || artwork.Category == Models.Category.Auction || artwork.Status == Status.Sold)
+            if (artwork == null || artwork.Category == Models.Category.Auction || artwork.Status == Models.Status.Sold)
             {
                 throw new InvalidOperationException("Artwork cannot be added to cart.");
             }

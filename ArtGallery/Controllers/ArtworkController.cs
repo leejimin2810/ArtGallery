@@ -20,7 +20,7 @@ namespace ArtGallery.Controllers
             _context = context;
             _mapper = mapper;
         }
-        public async Task<IActionResult> Index(string title, Category[] categories, double? minPrice, double? maxPrice, Status? status, string artistName)
+        public async Task<IActionResult> Index(string title, Category[] categories, double? minPrice, double? maxPrice, Status[] statuses, string artistName)
         {
             var artworks = from a in _context.Artworks.Include(a => a.Artist)
                            select a;
@@ -45,9 +45,9 @@ namespace ArtGallery.Controllers
                 artworks = artworks.Where(a => a.Price <= maxPrice.Value);
             }
 
-            if (status.HasValue)
+            if (statuses != null && statuses.Length > 0)
             {
-                artworks = artworks.Where(a => a.Status == status.Value);
+                artworks = artworks.Where(a => statuses.Contains(a.Status));
             }
 
             if (!string.IsNullOrEmpty(artistName))
@@ -81,6 +81,8 @@ namespace ArtGallery.Controllers
         public async Task<IActionResult> Create()
         {
             ViewBag.Artist = await _context.Artists.ToListAsync();
+            ViewBag.Exhibition = await _context.Exhibitions.ToListAsync();
+
             return View();
         }
 
@@ -97,6 +99,7 @@ namespace ArtGallery.Controllers
                 return RedirectToAction("Admin");
             }
 
+            ViewBag.Exhibition = await _context.Exhibitions.ToListAsync();
             ViewBag.Artist = await _context.Artists.ToListAsync();
             return View(artworkCreate);
         }
@@ -110,6 +113,7 @@ namespace ArtGallery.Controllers
             }
             var artworkEdit = _mapper.Map<ArtworkEdit>(artwork);
 
+            ViewBag.Exhibition = await _context.Exhibitions.ToListAsync();
             ViewBag.Artist = await _context.Artists.ToListAsync();
             return View(artworkEdit);
         }

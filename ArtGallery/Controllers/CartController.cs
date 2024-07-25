@@ -58,22 +58,17 @@ namespace ArtGallery.Controllers
             var artworks = await _context.Artworks
                                          .Where(a => cart.ArtworkIds.Contains(a.ArtworkId))
                                          .ToListAsync();
-
-            // Cập nhật trạng thái của các artwork thành Sold
+           
             foreach (var artwork in artworks)
             {
                 artwork.Status = Status.Sold;
                 _context.Update(artwork);
             }
-
-            // Lưu các thay đổi vào cơ sở dữ liệu
             await _context.SaveChangesAsync();
-
-            // Xóa các artwork khỏi giỏ hàng
             await _cartService.ClearCart(int.Parse(accountId));
 
             TempData["SuccessMessage"] = "Payment successful! All artworks have been marked as Sold.";
-            return RedirectToAction("Index", "Home"); // Chuyển hướng về trang chính hoặc trang bạn muốn
+            return RedirectToAction("Index", "Home");
         }
 
 
@@ -92,7 +87,6 @@ namespace ArtGallery.Controllers
             }
             catch (InvalidOperationException ex)
             {
-                // Xu ly loi
                 ViewBag.ErrorMessage = ex.Message;
                 return RedirectToAction("Index", "Artwork", new { artworkId });
             }

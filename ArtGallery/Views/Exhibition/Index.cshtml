@@ -17,7 +17,12 @@
 </div>
 <!-- Single Page Header End -->
 <<div class="container my-5">
+    <div class="header-section">
+        <h1>Welcome to Our Exhibition</h1>
+        <p>Discover our latest artworks and events.</p>
+    </div>
     <div id="carouselExampleSlidesOnly" class="carousel slide mx-auto" style="max-width: 800px;" data-bs-ride="carousel">
+
         <div class="carousel-inner">
             @if (Model != null && Model.Any())
             {
@@ -27,7 +32,7 @@
                     <div class="carousel-item @(isFirst ? "active" : "")">
                         <img src="@exhibition.ImageUrl" class="d-block w-100" alt="@exhibition.ExhibitionName">
                         <div class="carousel-caption d-none d-md-block">
-                            <a href="@Url.Action("Detail", "Exhibition", new { id = exhibition.ExhibitionId })" class="btn btn-primary">View Details</a>
+                            <a href="@Url.Action("Detail", "Exhibition", new { id = exhibition.ExhibitionId })" class="btn btn-primary w-auto">@exhibition.ExhibitionName</a>
                         </div>
                     </div>
                     isFirst = false;

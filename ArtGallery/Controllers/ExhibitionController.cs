@@ -37,7 +37,8 @@ namespace ArtGallery.Controllers
             {
                 return NotFound();
             }
-            var exhibitionView = _mapper.Map<ExhibitionView>(exhibition);
+            var exhibitionView = _mapper.Map<ExhibitionView>(exhibition);            
+            exhibitionView.ArtworkImages = await _context.Artworks.Where(x => x.ExhibitionId == id).Select(x => x.ImageURL).ToListAsync();
             return View(exhibitionView);
         }
         public IActionResult Create()
