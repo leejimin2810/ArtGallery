@@ -23,7 +23,19 @@ namespace ArtGallery.Controllers
         {
             var auctions = await _context.Auctions
                 .Include(a => a.Artwork)
-                .Include(a => a.Customer)
+                .Include(a => a.Account)
+                .ToListAsync();
+
+            var auctionViews = _mapper.Map<List<AuctionView>>(auctions);
+
+            return View(auctionViews);
+        }
+
+        public async Task<IActionResult> Admin()
+        {
+            var auctions = await _context.Auctions
+                .Include(a => a.Artwork)
+                .Include(a => a.Account)
                 .ToListAsync();
 
             var auctionViews = _mapper.Map<List<AuctionView>>(auctions);
@@ -47,6 +59,7 @@ namespace ArtGallery.Controllers
                 ModelState.AddModelError("", "Your bid must be higher than the current bid.");
                 var auctions = await _context.Auctions
                     .Include(a => a.Artwork)
+                    .Include(a => a.Account)
                     .ToListAsync();
                 var auctionViews = _mapper.Map<List<AuctionView>>(auctions);
                 return View("Index", auctionViews);
@@ -55,10 +68,42 @@ namespace ArtGallery.Controllers
             }
 
             auction.CurrentBid = model.NewBid;
+            auction.AccountId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "AccountId")?.Value);
+
             _context.Auctions.Update(auction);
+            
+            var artwork = await _context.Artworks.FindAsync(auction.ArtworkId);
+            artwork.Status = Status.Sold;
+            _context.Update(artwork);
+
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Create()
+        {
+            ViewBag.Artwork = await _context.Artworks
+                .Where(x => x.Status == Status.Available && x.Category == Category.Auction)
+                .ToListAsync();
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(AuctionCreate auctionCreate)
+        {
+            if (ModelState.IsValid)
+            {
+                var auction = _mapper.Map<Auction>(auctionCreate);
+                _context.Add(auction);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Admin");
+            }
+
+            ViewBag.Artwork = await _context.Artworks.ToListAsync();
+            return View(auctionCreate);
         }
 
         public async Task<IActionResult> Edit(int id)
@@ -69,37 +114,49 @@ namespace ArtGallery.Controllers
             {
                 return NotFound();
             }
-
-            var auctionViewModel = _mapper.Map<AuctionView>(auction);
+            var auctionViewModel = _mapper.Map<AuctionEdit>(auction);
+            ViewBag.Artwork = await _context.Artworks.ToListAsync();
             return View(auctionViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(AuctionView model)
+        public async Task<IActionResult> Edit(int id, AuctionEdit auctionEdit)
         {
-            if (!ModelState.IsValid)
+            if (id == null)
             {
-                return View(model);
+                return NotFound();
             }
 
-            var auction = _mapper.Map<Auction>(model);
-            _context.Auctions.Update(auction);
-            await _context.SaveChangesAsync();
+            var auction = await _context.Auctions.FindAsync(id);
+            if (auction == null)
+            {
+                return NotFound();
+            }
 
-            return RedirectToAction(nameof(Index));
+            if (ModelState.IsValid)
+            {
+                _mapper.Map(auctionEdit, auction);
+                _context.Update(auction);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Admin");
+            }
+            return View(auctionEdit);
         }
 
         public async Task<IActionResult> Delete(int id)
         {
-            var auction = await _context.Auctions.FindAsync(id);
+            var auction = await _context.Auctions
+                .Include(a => a.Artwork)
+                .FirstOrDefaultAsync(x => x.AuctionId == id);
 
             if (auction == null)
             {
                 return NotFound();
             }
 
-            return View(auction);
+            var auctionView = _mapper.Map<AuctionView>(auction);
+            return View(auctionView);
         }
 
         [HttpPost, ActionName("Delete")]
@@ -113,9 +170,14 @@ namespace ArtGallery.Controllers
             }
 
             _context.Auctions.Remove(auction);
+
+            var artwork = await _context.Artworks.FindAsync(auction.ArtworkId);
+            artwork.Status = Status.Available;
+            _context.Update(artwork);
+
             await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Admin));
         }
     }
 }

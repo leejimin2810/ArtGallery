@@ -32,7 +32,7 @@ namespace ArtGallery.Models
     }
     public enum Status
     {
-        OnSale,
+        Available,
         Sold
     }
 }

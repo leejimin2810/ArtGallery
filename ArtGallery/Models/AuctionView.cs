@@ -12,6 +12,7 @@ namespace ArtGallery.Models
         public DateTime EndDate { get; set; }
         public double StartingPrice { get; set; }
         public double CurrentBid { get; set; }
+        public string UserName { get; set; }
         public double NewBid { get; set; }
     }
 }
