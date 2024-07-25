@@ -7,6 +7,21 @@
     z-index: 99999;
  }
 
+.custom-btn {
+    background: linear-gradient(45deg, #007bff, #00aaff);
+    border: none;
+    border-radius: 50px;
+    transition: background 0.3s, transform 0.3s;
+}
+
+    .custom-btn:hover {
+        background: linear-gradient(45deg, #0056b3, #0086d1);
+        transform: scale(1.05);
+    }
+
+    .custom-btn i {
+        margin-right: 8px;
+    }
  #spinner.show {
      transition: opacity .8s ease-out, visibility 0s linear .0s;
      visibility: visible;

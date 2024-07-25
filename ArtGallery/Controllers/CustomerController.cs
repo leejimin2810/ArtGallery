@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using ArtGallery.Data;
 using ArtGallery.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ArtGallery.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CustomerController : Controller
     {
         private readonly ApplicationDbContext _context;

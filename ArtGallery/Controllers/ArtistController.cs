@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ArtGallery.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class ArtistController : Controller
     {
         private readonly ApplicationDbContext _context;

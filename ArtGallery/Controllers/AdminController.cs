@@ -9,7 +9,7 @@ using System.Security.Claims;
 
 namespace ArtGallery.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Artist")]
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -34,35 +34,5 @@ namespace ArtGallery.Controllers
             }
             return View();
         }
-        public IActionResult Error404()
-        {
-            return View();
-        }
-        public IActionResult LoginManagement()
-        {
-            return View();
-        }
-        public IActionResult Authorization()
-        {
-            return View();
-        }
-        public IActionResult Login()
-        {
-            return View();
-        }
-
-        public IActionResult Blank()
-        {
-            return View();
-        }
-        public IActionResult ForgotPassword()
-        {
-            return View();
-        }
-        public IActionResult Register()
-        {
-            return View();
-        }
-
     }
 }

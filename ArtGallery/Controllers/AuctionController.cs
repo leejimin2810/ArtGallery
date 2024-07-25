@@ -31,7 +31,7 @@ namespace ArtGallery.Controllers
 
             return View(auctionViews);
         }
-
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Admin()
         {
             var auctions = await _context.Auctions
@@ -44,6 +44,7 @@ namespace ArtGallery.Controllers
             return View(auctionViews);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PlaceBid(AuctionView model)
@@ -82,6 +83,7 @@ namespace ArtGallery.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create()
         {
             ViewBag.Artwork = await _context.Artworks
@@ -90,6 +92,7 @@ namespace ArtGallery.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AuctionCreate auctionCreate)
@@ -107,6 +110,7 @@ namespace ArtGallery.Controllers
             return View(auctionCreate);
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id)
         {
             var auction = await _context.Auctions.FindAsync(id);
@@ -120,6 +124,7 @@ namespace ArtGallery.Controllers
             return View(auctionViewModel);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, AuctionEdit auctionEdit)
@@ -145,6 +150,7 @@ namespace ArtGallery.Controllers
             return View(auctionEdit);
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var auction = await _context.Auctions
@@ -160,6 +166,7 @@ namespace ArtGallery.Controllers
             return View(auctionView);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

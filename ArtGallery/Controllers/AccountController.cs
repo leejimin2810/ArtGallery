@@ -11,9 +11,11 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ArtGallery.Controllers
 {
+
     public class AccountController : Controller
     {
         private readonly ApplicationDbContext _context;

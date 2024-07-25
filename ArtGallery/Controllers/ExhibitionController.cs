@@ -25,6 +25,7 @@ namespace ArtGallery.Controllers
             var exhibitionViews = _mapper.Map<List<ExhibitionView>>(exhibitions);
             return View(exhibitionViews);
         }
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Admin()
         {
             var exhibitions = await _context.Exhibitions.ToListAsync();
@@ -42,12 +43,15 @@ namespace ArtGallery.Controllers
             exhibitionView.ArtworkImages = await _context.Artworks.Where(x => x.ExhibitionId == id).Select(x => x.ImageURL).ToListAsync();
             return View(exhibitionView);
         }
+
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
         // POST: Exhibition/Create
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ExhibitionView exhibitionView)
@@ -63,6 +67,7 @@ namespace ArtGallery.Controllers
         }
 
         //GET: Exhibition/Edit
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id)
         {
             var exhibition = await _context.Exhibitions.FindAsync(id);
@@ -75,6 +80,7 @@ namespace ArtGallery.Controllers
         }
 
         //POST: Exhibition/Edit
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int? id, ExhibitionView exhibitionView)
@@ -117,6 +123,7 @@ namespace ArtGallery.Controllers
         }
 
         //GET: Exhibition/Delete
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var exhibition = await _context.Exhibitions.FindAsync(id);
@@ -129,6 +136,7 @@ namespace ArtGallery.Controllers
         }
 
         //POST: Exhibition/Delete
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

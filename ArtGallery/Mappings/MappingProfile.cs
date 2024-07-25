@@ -26,14 +26,10 @@ namespace ArtGallery.Mappings
             CreateMap<CustomerEdit, Customer>();
             CreateMap<CustomerCreate, Customer>();
             CreateMap<CustomerCreate, Account>();
-            CreateMap<Review, ReviewView>().ReverseMap();
-            CreateMap<Transaction, TransactionView>().ReverseMap();
             CreateMap<Exhibition, ExhibitionView>().ReverseMap();
             CreateMap<Register, Account>();
             CreateMap<Register, Customer>();
             CreateMap<Register, Artist>();
-            
-            //CreateMap<ExhibitionView, Exhibition>();
         }
     }
 }
