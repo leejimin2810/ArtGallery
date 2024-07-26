@@ -70,6 +70,18 @@ namespace ArtGallery.Controllers
                 //ModelState.AddModelError("", "Your bid must be higher than the current bid.");
                 //return View("Index", model);
             }
+            if (model.NewBid <= auction.StartingPrice)
+            {
+                ModelState.AddModelError("", "Your bid must be higher than the Start price.");
+                var auctions = await _context.Auctions
+                    .Include(a => a.Artwork)
+                    .Include(a => a.Account)
+                    .ToListAsync();
+                var auctionViews = _mapper.Map<List<AuctionView>>(auctions);
+                return View("Index", auctionViews);
+                //ModelState.AddModelError("", "Your bid must be higher than the current bid.");
+                //return View("Index", model);
+            }
 
             auction.CurrentBid = model.NewBid;
             auction.AccountId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "AccountId")?.Value);
