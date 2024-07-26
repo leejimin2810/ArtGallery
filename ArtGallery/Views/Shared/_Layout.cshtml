@@ -1,5 +1,6 @@
 ﻿@using System.Security.Claims;
 @{
+    var title = ViewData["Title"] ?? "Admin";
     var role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
     var username = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
 }
@@ -13,7 +14,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Admin</title>
+    <title>@title</title>
 
     <!-- Custom fonts for this template-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">

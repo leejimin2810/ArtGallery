@@ -2,7 +2,7 @@
 
 @inject ArtGallery.Services.CartService _cartService
 @{
-    ViewData["Title"] = "_UserLayout";
+    var title = ViewData["Title"] ?? "";
     var role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
     var accountId = User.Claims.FirstOrDefault(c => c.Type == "AccountId")?.Value;
     var cartItemCount = 0;
@@ -17,7 +17,7 @@
 
 <head>
     <meta charset="utf-8">
-    @* <title>Fruitables - Vegetable Website Template</title> *@
+    <title>@title</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
