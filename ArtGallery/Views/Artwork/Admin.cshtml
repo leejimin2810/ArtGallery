@@ -15,7 +15,7 @@
     <thead>
         <tr>
             <th>Artwork Title</th>
-            <th>StartingPrice</th>
+            <th>Artist Name</th>
             <th>Description</th>
             <th>Category</th>
             <th>Status</th>
@@ -34,7 +34,7 @@
                 <td>@item.Status</td>
                 <td>@item.Price?.ToString("C")</td>
                 <td>
-                    <a href="@Url.Action("Edit", new { id = item.ArtworkId })" class="btn btn-warning">
+                    <a href="@Url.Action("Edit", new { id = item.ArtworkId })" class="btn btn-warning mb-2">
                         <i class="fas fa-edit"></i>
                     </a>
                     <a href="@Url.Action("Delete", new { id = item.ArtworkId })" class="btn btn-danger">

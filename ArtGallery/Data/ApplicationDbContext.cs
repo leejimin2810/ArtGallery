@@ -13,8 +13,6 @@ namespace ArtGallery.Data
 		public DbSet<Auction> Auctions { get; set; }
 		public DbSet<Customer> Customers { get; set; }
 		public DbSet<Exhibition> Exhibitions { get; set; }
-		public DbSet<Review> Reviews { get; set; }
-		public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<ArtGallery.Models.ExhibitionDetail> ExhibitionDetail { get; set; } = default!;
