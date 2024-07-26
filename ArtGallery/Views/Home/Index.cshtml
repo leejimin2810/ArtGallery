@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<ArtGallery.Models.ExhibitionView>
 
 @{
-    ViewData["title"] = "Home";
+    ViewData["Title"] = "Home";
     Layout = "_UserLayout";
 }
 <!-- Hero Start -->
-<div class="container-fluid py-5 mb-5 hero-header">
+<div class="container-fluid mb-5 hero-header">
     <div class="container py-5">
         <div class="row g-5 align-items-center">
-            <div class="col-md-12 col-lg-7">
+            <div class="col-md-12 col-lg-7 py-5">
                 <h4 class="mb-3 text-secondary">100% Art</h4>
                 <h1 class="mb-5 display-3 text-primary">Art is deceiving moonlight</h1>
                 @* <div class="position-relative mx-auto">
@@ -19,18 +19,17 @@
             <div class="col-md-12 col-lg-5">
                 <div id="carouselId" class="carousel slide position-relative" data-bs-ride="carousel">
                     <div class="carousel-inner" role="listbox">
-                        <div class="carousel-item active rounded">
-                            @if (Model.Any())
-                            {
-                                foreach (var item in Model)
-                                {
-
-                                    <img src="@item.ImageUrl" class="img-fluid w-100 h-100 bg-secondary rounded" alt="@item.ExhibitionName">
-                                    <a asp-controller="Exhibition" asp-action="Detail" class="btn px-4 py-2 text-white rounded">@item.ExhibitionName</a>
-
-                                }
-                            }
-                        </div>
+                        @{var isFirst = true;}
+                        @foreach (var item in Model)
+                        {
+                            <div class="carousel-item rounded @(isFirst ? "active" : "")">
+                                <img src="@item.ImageUrl" class="img-fluid w-100 h-100 bg-secondary rounded" alt="@item.ExhibitionName">
+                                <a href="@Url.Action("Detail", "Exhibition", new { id = item.ExhibitionId })" class="btn px-4 py-2 text-white rounded">
+                                    @item.ExhibitionName
+                                </a>
+                            </div>
+                            isFirst = false;
+                        }
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>

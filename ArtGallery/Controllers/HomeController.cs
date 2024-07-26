@@ -1,4 +1,6 @@
+using ArtGallery.Data;
 using ArtGallery.Models;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,16 +13,21 @@ namespace ArtGallery.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ApplicationDbContext context, IMapper mapper)
         {
-            _logger = logger;
+            _context = context;
+            _mapper = mapper;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            ViewData["ActiveNav"] = "Home";
+            var exhibitions = await _context.Exhibitions.ToListAsync();
+            var exhibitionViews = _mapper.Map<List<ExhibitionView>>(exhibitions);
+            return View(exhibitionViews);
         }
 
         [AllowAnonymous]
