@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.CodeDom;
+using System.Security.Claims;
 
 namespace ArtGallery.Controllers
 {
@@ -66,9 +67,23 @@ namespace ArtGallery.Controllers
         [Authorize(Roles = "Artist, Admin")]
         public async Task<IActionResult> Admin()
         {
-            var artworks = await _context.Artworks.Include(c => c.Artist).ToListAsync();
-            var artworkViews = _mapper.Map<List<ArtworkView>>(artworks);
-            return View(artworkViews);
+            var accountId = User.Claims.FirstOrDefault(c => c.Type == "AccountId")?.Value;
+            var role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            if (role == "Admin")
+            {
+                var artworks = await _context.Artworks.Include(c => c.Artist).ToListAsync();
+                var artworkViews = _mapper.Map<List<ArtworkView>>(artworks);
+                return View(artworkViews);
+            }
+            else if (role == "Artist")
+            {
+                var artist = await _context.Artists.FirstOrDefaultAsync(x => x.AccountId.ToString() == accountId);
+                var artworks = await _context.Artworks.Include(c => c.Artist).Where(x => x.ArtistId == artist.ArtistId).ToListAsync();
+                var artworkViews = _mapper.Map<List<ArtworkView>>(artworks);
+                return View(artworkViews);
+            }
+
+            return View();
         }
 
         public async Task<IActionResult> Detail(int id)
@@ -96,18 +111,21 @@ namespace ArtGallery.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ArtworkCreate artworkCreate)
         {
-            if (ModelState.IsValid)
+            var artwork = _mapper.Map<Artwork>(artworkCreate);
+
+            var role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+
+            if (role == "Artist")
             {
-                var artwork = _mapper.Map<Artwork>(artworkCreate);
-                artwork.CreateAt = DateTime.Now;
-                _context.Add(artwork);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Admin");
+                var accountId = User.Claims.FirstOrDefault(c => c.Type == "AccountId")?.Value;
+                var artist = await _context.Artists.FirstOrDefaultAsync(x => x.AccountId.ToString() == accountId);
+                artwork.ArtistId = artist.ArtistId;
             }
 
-            ViewBag.Exhibition = await _context.Exhibitions.ToListAsync();
-            ViewBag.Artist = await _context.Artists.ToListAsync();
-            return View(artworkCreate);
+            artwork.CreateAt = DateTime.Now;
+            _context.Add(artwork);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Admin");
         }
 
         [Authorize(Roles = "Artist, Admin")]
